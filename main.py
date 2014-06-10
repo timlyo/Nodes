@@ -9,7 +9,12 @@ def main():
 	pygame.init()
 	print("==Started==")
 
-	window = Window.Window()
+	clock = pygame.time.Clock()
+
+	variables = {}
+	variables["clock"] = clock
+
+	window = Window.Window(variables)
 	grid = Grid.Grid()
 	mouseInput = Input.MouseInput()
 
@@ -17,6 +22,8 @@ def main():
 
 	running = True
 	while running:
+		clock.tick()
+		window.updateGuiVariable("fps", int(clock.get_fps()))
 		#input
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
@@ -43,13 +50,17 @@ def main():
 				window.resize(event.size[0],event.size[1])
   		
 		if mouseInput.mouseClicked():
-			gridDisplacement = mouseInput.getMouseMovement()
+			movement = mouseInput.getMouseMovement()
+			gridDisplacement[0] += movement[0]
+			gridDisplacement[1] += movement[1]
+			window.gridChanged = True
 		else:
 			mouseInput.getMouseMovement()
 
 		#rendering
 		window.clear()
 		window.drawGrid(gridDisplacement)
+		window.drawGui()
 		window.update()
 
 	print("==Shutting down==")
