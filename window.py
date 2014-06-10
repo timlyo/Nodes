@@ -9,7 +9,7 @@ class Window():
 		self.size = self.window.get_size()
 
 		self.scale = 1.0
-		self.gridSize = 50
+		self.baseGridSize = 50
 
 		self.gridSurface = pygame.Surface(self.size)
 
@@ -30,19 +30,18 @@ class Window():
 		self.window.blit(source,dest)
 
 	def zoomOut(self):
-		if(self.scale > 0.11):
+		if(self.scale > 0.51):
 			self.scale -= 0.1
 		print("Scale changed:", self.scale)
 
 	def zoomIn(self):
-		if(self.scale < 5):
+		if(self.scale < 3):
 			self.scale += 0.1
 		print("Scale changed:", self.scale)
 	
 	def drawGrid(self,displacement):
 		self.gridSurface.fill((0,0,0))
-		rects = []
-		gridSize = int(self.gridSize * self.scale)
+		self.gridSize = int(self.baseGridSize * self.scale)
 
 		for x in range(0,self.size[0]//self.gridSize+1):
 			for y in range(0,self.size[1]//self.gridSize+1):
