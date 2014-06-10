@@ -1,5 +1,6 @@
-repository set up to track my uni work for an internship
+Repository set up to track my uni work for an internship.
 
-dependencies:
-	python 3
-	pygame
+Dependencies
+-------
+* python 3
+* pygame
