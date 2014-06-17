@@ -40,13 +40,14 @@ class Window():
 		if(self.scale > 0.51):
 			self.scale -= 0.1
 			self.gridChanged = True
-			print("Scale changed:", self.scale)
 
 	def zoomIn(self):
 		if(self.scale < 3):
 			self.scale += 0.1
 			self.gridChanged = True
-			print("Scale changed:", self.scale)
+
+	def updateGrid(self):
+		self.gridChanged = True
 	
 	def drawGrid(self,displacement):
 		if self.gridChanged:
@@ -54,15 +55,25 @@ class Window():
 			self.gridSize = int(self.baseGridSize * self.scale)
 			rects = []
 
+			#to stop grid rendering at top left edge
+			if displacement[0] > 0:
+				xAdjustment = 0
+			else:
+				xAdjustment = self.gridSize
+
+			if displacement[1] > 0:
+				yAdjustment = 0
+			else:
+				yAdjustment = self.gridSize
+
 			for x in range(0,self.size[0]//self.gridSize+1):
 				for y in range(0,self.size[1]//self.gridSize+1):
-					rects.append(Rect(x*self.gridSize+displacement[0],
-									  y*self.gridSize+displacement[1],
+					rects.append(Rect(x*self.gridSize+(displacement[0]%self.gridSize)-xAdjustment,
+									  y*self.gridSize+(displacement[1]%self.gridSize)-yAdjustment,
 										self.gridSize,self.gridSize))
 			for item in rects:
-				pygame.draw.rect(self.gridSurface, (0,0,random.randint(255,255)), item, 1)
+				pygame.draw.rect(self.gridSurface, (0,0,200), item, 1)
 			self.gridChanged = False
-			print("Grid recreated")
 
 		self.blit(self.gridSurface)
 

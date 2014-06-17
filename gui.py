@@ -10,7 +10,7 @@ class Gui:
 		self.variables["scale"] = 1.0
 
 		self.createElements()
-		print ("created gui")
+		print ("Created gui")
 
 	def draw(self, surface):
 		for widget in self.elements:

@@ -4,20 +4,29 @@ class MouseInput:
 	mouseButtonDown = False
 	def __init__(self):
 		print("Mouse input started")
-		self.mousePositions = [[0,0],[0,0]] #current and previous positions
+		self.mousePosition = [0, 0]
+		self.previousMousePosition = [0, 0]
+		self.clickPos = [0, 0]
 
-	def mouseDown(self,position):
-		print("Mouse Button Down at ", position)
+	def mouseDown(self, position):
 		self.mouseButtonDown = True
 
-	def mouseUp(self,position):
+	def mouseUp(self, position, displacement):
 		self.mouseButtonDown = False
-
-	def getMouseMovement(self):
-		self.mousePositions[1] = self.mousePositions[0]
-		self.mousePositions[0] = mouse.get_pos()
-		return (self.mousePositions[0][0]-self.mousePositions[1][0],
-				self.mousePositions[0][1]-self.mousePositions[1][1])
+		if self.getMouseMovement()[0] + self.getMouseMovement()[1] < 5:
+			self.displacedPosition(displacement)
 
 	def mouseClicked(self):
 		return self.mouseButtonDown
+
+	def getMouseMovement(self):
+		self.previousMousePosition = self.mousePosition
+		self.mousePosition = mouse.get_pos()
+		return (self.mousePosition[0] - self.previousMousePosition[0],
+				self.mousePosition[1] - self.previousMousePosition[1])
+
+	def displacedPosition(self, displacement):
+		print ("click pos = ", self.clickPos)
+		self.clickPos[0] = self.previousMousePosition[0] + displacement[0]
+		self.clickPos[1] = self.previousMousePosition[1] + displacement[1]
+		print("Click at ", self.clickPos)
