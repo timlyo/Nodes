@@ -2,6 +2,7 @@ import pygame
 from pygame.locals import *
 
 import gui as Gui
+import grid as Grid
 
 import random
 
@@ -13,10 +14,12 @@ class Window():
 		self.scale = 1.0
 		self.baseGridSize = 50
 
+		#surfaces
 		self.gridSurface = pygame.Surface(self.size)
-		self.guiSurface = pygame.Surface(self.size, pygame.SRCALPHA, 32).convert_alpha()
+		self.guiSurface  = pygame.Surface(self.size, pygame.SRCALPHA, 32).convert_alpha()
 		print("Creating Window")
 
+		self.grid = Grid.Grid(self.scale, self.baseGridSize)
 		self.gui = Gui.Gui(variables)
 		self.gridChanged = True
 
@@ -39,17 +42,19 @@ class Window():
 	def zoomOut(self):
 		if(self.scale > 0.51):
 			self.scale -= 0.1
+			self.grid.updateScale(self.scale)
 			self.gridChanged = True
 
 	def zoomIn(self):
 		if(self.scale < 3):
 			self.scale += 0.1
+			self.grid.updateScale(self.scale)
 			self.gridChanged = True
 
 	def updateGrid(self):
 		self.gridChanged = True
 	
-	def drawGrid(self,displacement):
+	def drawGridLines(self,displacement):
 		if self.gridChanged:
 			self.gridSurface.fill((0,0,0))
 			self.gridSize = int(self.baseGridSize * self.scale)
@@ -75,15 +80,18 @@ class Window():
 				pygame.draw.rect(self.gridSurface, (0,0,200), item, 1)
 			self.gridChanged = False
 
-		self.blit(self.gridSurface)
+	def drawNodes(self,displacement):
+		self.grid.drawNodes(self.gridSurface, displacement)
 
+	def blitSurfaces(self):
+		self.blit(self.gridSurface)
+		self.blit(self.guiSurface)
 
 	#GUI Functions
 	def drawGui(self):
 		self.gui.updateElements()
 		self.guiSurface.fill((0,0,0,0))
 		self.gui.draw(self.guiSurface)
-		self.blit(self.guiSurface)
 
 	def updateGuiVariable(self, key, value):
 		self.gui.updateVariable(key, value)

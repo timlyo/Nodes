@@ -16,7 +16,7 @@ class MouseInput:
 		if self.getMouseMovement()[0] + self.getMouseMovement()[1] < 5:
 			self.displacedPosition(displacement)
 
-	def mouseClicked(self):
+	def isMouseClicked(self):
 		return self.mouseButtonDown
 
 	def getMouseMovement(self):
@@ -26,7 +26,6 @@ class MouseInput:
 				self.mousePosition[1] - self.previousMousePosition[1])
 
 	def displacedPosition(self, displacement):
-		print ("click pos = ", self.clickPos)
 		self.clickPos[0] = self.previousMousePosition[0] + displacement[0]
 		self.clickPos[1] = self.previousMousePosition[1] + displacement[1]
 		print("Click at ", self.clickPos)

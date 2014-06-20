@@ -1,4 +1,3 @@
-import grid as Grid
 import window as Window
 import input as Input
 
@@ -15,7 +14,6 @@ def main():
 	variables["clock"] = clock
 
 	window = Window.Window(variables)
-	grid = Grid.Grid()
 	mouseInput = Input.MouseInput()
 
 	displacement = [0, 0]
@@ -50,7 +48,7 @@ def main():
 			elif event.type == pygame.VIDEORESIZE:
 				window.resize(event.size[0], event.size[1])
 
-		if mouseInput.mouseClicked():
+		if mouseInput.isMouseClicked():
 			movement = mouseInput.getMouseMovement()
 			displacement[0] += movement[0]
 			displacement[1] += movement[1]
@@ -64,8 +62,10 @@ def main():
 
 		#rendering
 		window.clear()
-		window.drawGrid(displacement)
+		window.drawGridLines(displacement)
+		window.drawNodes(displacement)
 		window.drawGui()
+		window.blitSurfaces()
 		window.update()
 
 	print("==Shutting down==")
