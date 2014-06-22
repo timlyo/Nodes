@@ -14,7 +14,7 @@ def main():
 	variables["clock"] = clock
 
 	window = Window.Window(variables)
-	mouseInput = Input.MouseInput()
+	mouseInput = Input.MouseInput(window)
 
 	displacement = [0, 0]
 
