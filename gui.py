@@ -43,6 +43,6 @@ class Widget:
 		self.render()
 
 	def render(self):
-		self.finalText = self.text + str(self.variable)
-		self.surface = self.font.render(self.finalText, 1 , (255,255,255))
+		self.finalText = self.text + str(round(self.variable, 2))
+		self.surface = self.font.render(self.finalText, 1, (255,255,255))
 		self.height = self.surface.get_height()

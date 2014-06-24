@@ -95,3 +95,7 @@ class Window():
 
 	def updateGuiVariable(self, key, value):
 		self.gui.updateVariable(key, value)
+
+	#Other Functions
+	def getGrid(self):
+		return self.grid

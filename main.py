@@ -4,13 +4,14 @@ import input as Input
 import pygame
 from pygame.locals import *
 
+
 def main():
 	pygame.init()
 	print("==Started==")
 
 	clock = pygame.time.Clock()
 
-	variables = {}
+	variables = dict()
 	variables["clock"] = clock
 
 	window = Window.Window(variables)
@@ -22,18 +23,18 @@ def main():
 	while running:
 		clock.tick()
 		window.updateGuiVariable("fps", int(clock.get_fps()))
-		#input
+		# input
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
 				running = False
 
 			elif event.type == pygame.MOUSEBUTTONDOWN:
-				if event.button == 1:
+				if event.button == 1 or 3:
 					mouseInput.mouseDown(pygame.mouse.get_pos())
 
 			elif event.type == pygame.MOUSEBUTTONUP:
-				if event.button == 1:
-					mouseInput.mouseUp(pygame.mouse.get_pos(), displacement)
+				if event.button == 1 or 3:
+					mouseInput.mouseUp(pygame.mouse.get_pos(), displacement, event.button)
 				elif event.button == 4:
 					window.zoomIn()
 				elif event.button == 5:
@@ -70,6 +71,7 @@ def main():
 
 	print("==Shutting down==")
 	pygame.quit()
+
 
 if __name__ == "__main__":
 	main()
