@@ -9,13 +9,14 @@ class Grid:
 		self.scale = scale
 		self.baseGridSize = baseGridSize
 
-		self.colour = (150,150,150)
+		self.colour = (150, 150, 150)
 
 	def updateScale(self, scale):
 		self.scale = scale
 
 	def addNode(self, coords):
 		self.nodes[coords] = Node.Node()
+		self.setAllNodes()
 
 	def deleteNode(self, coords):
 		if coords in self.nodes:
@@ -34,7 +35,7 @@ class Grid:
 			yCord = int((item[1]*50+25)*self.scale) + displacement[1]
 			pygame.draw.circle(surface, self.colour, (xCord, yCord), int(20*self.scale))
 
-	def gridClick(self, position, button): #position includes displacement
+	def gridClick(self, position, button):  # position includes displacement
 		clickCoord = self.getClickCoord(position)
 		if button == 1:
 			self.addNode(clickCoord)
@@ -47,3 +48,8 @@ class Grid:
 		yCord = position[1] // self.baseGridSize
 		print("Clicked at ", (xCord, yCord))
 		return(xCord, yCord)
+
+	#checks every node and changes it's type if needed
+	def setAllNodes(self):
+		for node in self.nodes:
+			print(node)

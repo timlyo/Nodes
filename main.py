@@ -54,10 +54,6 @@ def main():
 			displacement[0] += movement[0]
 			displacement[1] += movement[1]
 			window.gridChanged = True
-			if displacement[0] > 40:
-				displacement[0] = 40
-			if displacement[1] > 40:
-				displacement[1] = 40
 		else:
 			mouseInput.getMouseMovement()
 

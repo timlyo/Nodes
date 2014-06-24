@@ -60,21 +60,10 @@ class Window():
 			self.gridSize = int(self.baseGridSize * self.scale)
 			rects = []
 
-			#to stop grid rendering at top left edge
-			if displacement[0] > 0:
-				xAdjustment = 0
-			else:
-				xAdjustment = self.gridSize
-
-			if displacement[1] > 0:
-				yAdjustment = 0
-			else:
-				yAdjustment = self.gridSize
-
 			for x in range(0,self.size[0]//self.gridSize+1):
 				for y in range(0,self.size[1]//self.gridSize+1):
-					rects.append(Rect(x*self.gridSize+(displacement[0]%self.gridSize)-xAdjustment,
-									  y*self.gridSize+(displacement[1]%self.gridSize)-yAdjustment,
+					rects.append(Rect(x*self.gridSize+(displacement[0]%self.gridSize)-self.gridSize,
+									  y*self.gridSize+(displacement[1]%self.gridSize)-self.gridSize,
 										self.gridSize,self.gridSize))
 			for item in rects:
 				pygame.draw.rect(self.gridSurface, (0,0,200), item, 1)
