@@ -30,7 +30,7 @@ class Window():
 		self.gui.updateVariable("scale", self.scale)
 		pygame.display.update()
 
-	def resize(self,newSizeX,newSizeY):
+	def resize(self, newSizeX, newSizeY):
 		pygame.display.set_mode((newSizeX,newSizeY),RESIZABLE)
 		self.size = self.window.get_size()
 		self.gridChanged = True

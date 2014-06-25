@@ -1,7 +1,7 @@
 import pygame
 
 class Gui:
-	def __init__(self,variables):
+	def __init__(self, variables):
 		self.mainFont = pygame.font.Font(None, 24)
 		self.elements = {}
 		self.variables = variables

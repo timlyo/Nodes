@@ -39,11 +39,8 @@ class MouseInput:
 	def isClick(self):
 		xMovement = self.mouseUpPosition[0] - self.mouseDownPosition[0]
 		yMovement = self.mouseUpPosition[1] - self.mouseDownPosition[1]
-		print("Movement :", (xMovement, yMovement))
 		if abs(xMovement + yMovement) < 5:
-			print("Click")
 			return True
-		print("Not Click")
 		return False
 
 

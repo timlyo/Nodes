@@ -21,7 +21,7 @@ def main():
 
 	running = True
 	while running:
-		clock.tick()
+		clock.tick(60)
 		window.updateGuiVariable("fps", int(clock.get_fps()))
 		# input
 		for event in pygame.event.get():
