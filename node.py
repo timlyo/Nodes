@@ -1,8 +1,11 @@
+import random
+
 class Node:
 	def __init__(self):
 		print("node created")
 		self.type = "default"
-		self.value = False
+		self.value = random.choice((True, False))
+		self.connections = []  # 0 is down 1 is right
 
 	def becomeInput(self):
 		self.type = "input"
@@ -31,5 +34,14 @@ class Node:
 			return True
 		return False
 
+	def isDefault(self):
+		if self.type == "default":
+			return True
+		return False
+
 	def getValue(self):
 		return self.value
+
+	def connect(self, index, node):
+		assert 0 <= index <= 1
+		self.connections[index] = node
