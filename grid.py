@@ -74,12 +74,22 @@ class Grid:
 		left = (-1, 0)
 		above = (0, -1)
 		below = (0, 1)
-		for node in self.nodes:
+		for node in self.nodes:  # This may be changed later
 			self.nodes[node].becomeDefault()
-			if not self.isNode(left, node) or not self.isNode(above, node):
-				if self.isNode(below, node) or self.isNode(right, node):
+			if not self.isNode(left, node) and not self.isNode(above, node):
+				self.getNode(node).becomeInput()
+			if not self.isNode(above, node):
+				if self.isNode(left, node) and self.getNode(left, node).isInput():
 					self.getNode(node).becomeInput()
-
+			if not self.isNode(left, node):
+				if self.isNode(above, node) and self.getNode(above, node).isInput():
+					self.getNode(node).becomeInput()
+			if self.isNode(left, node) and self.getNode(left, node).isDefault():
+				if not self.isNode(right, node):
+					self.getNode(node).becomeOutput()
+			if self.isNode(above, node) and self.getNode(above, node).isDefault():
+				if not self.getNode(below, node):
+					self.getNode(node).becomeOutput()
 
 	#connects each node to the one below and to the right of it
 	#WIP
@@ -113,6 +123,6 @@ class Grid:
 			pos = (coords[0] + node[0], coords[1] + node[1])
 		else:
 			pos = coords
-		if self.isNode(pos, node):
+		if self.isNode(pos):
 			return self.nodes[pos]
 		return None
