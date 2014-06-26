@@ -16,9 +16,6 @@ class Node:
 	def becomeOutput(self):
 		self.type = "output"
 
-	def becomeInvalid(self):
-		self.type = "invalid"
-
 	def isInput(self):
 		if self.type == "input":
 			return True
@@ -26,11 +23,6 @@ class Node:
 
 	def isOutput(self):
 		if self.type == "output":
-			return True
-		return False
-
-	def isInvalid(self):
-		if self.type == "invalid":
 			return True
 		return False
 

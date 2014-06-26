@@ -4,11 +4,9 @@ from pygame.locals import *
 import gui as Gui
 import grid as Grid
 
-import random
-
 class Window():
-	def __init__(self,variables):
-		self.window = pygame.display.set_mode((0,0),RESIZABLE)
+	def __init__(self, variables):
+		self.window = pygame.display.set_mode((0, 0), RESIZABLE)
 		self.size = self.window.get_size()
 
 		self.scale = 1.0
@@ -17,10 +15,10 @@ class Window():
 		#surfaces
 		self.gridSurface = pygame.Surface(self.size)
 		self.guiSurface  = pygame.Surface(self.size, pygame.SRCALPHA, 32).convert_alpha()
-		print("Creating Window")
+		print("Creating Window ", self.getSize())
 
 		self.grid = Grid.Grid(self.scale, self.baseGridSize)
-		self.gui = Gui.Gui(variables)
+		self.gui = Gui.Gui(variables, self.window)
 		self.gridChanged = True
 
 	def clear(self):
@@ -80,11 +78,15 @@ class Window():
 	def drawGui(self):
 		self.gui.updateElements()
 		self.guiSurface.fill((0,0,0,0))
-		self.gui.draw(self.guiSurface)
+		self.gui.drawAll(self.guiSurface)
 
 	def updateGuiVariable(self, key, value):
 		self.gui.updateVariable(key, value)
 
-	#Other Functions
+	#Data Functions
 	def getGrid(self):
 		return self.grid
+
+	#window dimension functions
+	def getSize(self):
+		return self.size

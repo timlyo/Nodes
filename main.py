@@ -33,7 +33,6 @@ def main():
 					mouseInput.mouseDown(pygame.mouse.get_pos())
 
 			elif event.type == pygame.MOUSEBUTTONUP:
-				print(event.button)
 				if event.button == 1 or event.button == 3:
 					mouseInput.mouseUp(pygame.mouse.get_pos(), displacement, event.button)
 				elif event.button == 4:

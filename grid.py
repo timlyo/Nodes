@@ -36,8 +36,6 @@ class Grid:
 				colour = (50, 50, 255)
 			elif self.nodes[node].isOutput():
 				colour = (50, 255, 50)
-			elif self.nodes[node].isInvalid():
-				colour = (255, 50, 50)
 
 			xCord = int((node[0]*50+25)*self.scale) + displacement[0]
 			yCord = int((node[1]*50+25)*self.scale) + displacement[1]
@@ -92,19 +90,12 @@ class Grid:
 					self.getNode(node).becomeOutput()
 
 	#connects each node to the one below and to the right of it
-	#WIP
 	def connectNodes(self):
 		for node in self.nodes:
-			if (node[0] - 1, node[1]) in self.nodes:  # node left
-				self.nodes[node].connect()
-			elif (node[0], node[1] - 1) not in self.nodes:  # node above
-				self.nodes[node].becomeInput()
-			elif (node[0] + 1, node[1]) not in self.nodes:  # node below
-				self.nodes[node].becomeOutput()
-			elif (node[0], node[1] + 1) not in self.nodes:  # node right
-				self.nodes[node].becomeOutput()
-			else:
-				self.nodes[node].becomeDefault()
+			if self.isNode(below, node):
+				self.getNode(node).connect(0, self.getNode(below, node))
+			if self.isNode(right, node):
+				self.getNode(node).connect(0, self.getNode(right, node))
 
 	#check if node is at coords
 	#if a node is passed then the coords are relative to that
