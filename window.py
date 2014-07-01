@@ -19,7 +19,7 @@ class Window():
 		print("Creating Window ", self.size)
 
 		self.grid = Grid.Grid(self.scale, self.baseGridSize)
-		self.gui = Gui.Gui(variables, self.window)
+		self.gui = Gui.Gui(variables, self)
 		self.gridChanged = True
 
 	def clear(self):
@@ -68,7 +68,7 @@ class Window():
 				pygame.draw.rect(self.gridSurface, (0,0,200), item, 1)
 			self.gridChanged = False
 
-	def drawNodes(self,displacement):
+	def drawNodes(self, displacement):
 		self.grid.drawNodes(self.gridSurface, displacement)
 
 	def blitSurfaces(self):
@@ -91,3 +91,6 @@ class Window():
 	#window dimension functions
 	def getSize(self):
 		return self.size
+
+	def getWidth(self):
+		return self.window.get_width()

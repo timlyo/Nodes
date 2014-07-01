@@ -7,11 +7,13 @@ class Gui:
 		self.containers = {}
 		self.variables = variables
 		self.window = window
+		self.grid = self.window.getGrid()
 
 		#initial variable values
 		self.variables["scale"] = 1.0
 
 		self.createElements()
+		self.createContainers()
 		print("Created gui")
 
 	def drawAll(self, surface):
@@ -23,6 +25,10 @@ class Gui:
 		self.elements["fps"] = Widget("fps: ", self.mainFont, (0, 0), self.variables["clock"].get_fps(), True)
 		self.elements["scale"] = Widget("scale: ", self.mainFont, (0, self.elements["fps"].height), self.variables["scale"], True)
 
+		#info box stuff
+
+
+	def createContainers(self):
 		self.containers["infoBox"] = Container(self.window, [0, 0], [5, 5])
 		self.containers["infoBox"].addElement(self.elements["scale"])
 		self.containers["infoBox"].addElement(self.elements["fps"])
@@ -69,7 +75,7 @@ class Container:
 		elif self.position == "top":
 			self.coords[1] = 0
 		elif self.position == "right":
-			self.coords[0] = self.window.get_width() - self.width
+			self.coords[0] = self.window.getWidth() - self.width
 		elif not isinstance(position, str):
 			print("Position of type ", type(position), " not recognised")
 			return

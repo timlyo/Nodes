@@ -1,12 +1,12 @@
 import random
 
 class Node:
-	def __init__(self):
+	def __init__(self, coords):
 		print("node created")
 		self.type = "default"
 		self.value = random.choice((True, False))
-		self.connections = []  # 0 is down 1 is right
-
+		self.connections = [None, None]  # 0 is down 1 is right
+		self.coords = coords
 	def becomeInput(self):
 		self.type = "input"
 

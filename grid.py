@@ -15,8 +15,9 @@ class Grid:
 
 	def addNode(self, coords):
 		if not self.getNode(coords):
-			self.nodes[coords] = Node.Node()
+			self.nodes[coords] = Node.Node(coords)
 			self.setAllNodes()
+			self.connectNodes()
 			return True
 		return False
 
@@ -24,6 +25,7 @@ class Grid:
 		if coords in self.nodes:
 			del self.nodes[coords]
 			self.setAllNodes()
+			self.connectNodes()
 			return True
 		return False
 
@@ -35,20 +37,37 @@ class Grid:
 
 	#draws all nodes to the surface that is passed to it
 	def drawNodes(self, surface, displacement):
-		for node in self.nodes:
+		for nodeIndex in self.nodes:
+			node = self.getNode(nodeIndex)
+			nodePosition = self.getNodePosition(nodeIndex, displacement)  # on screen node coordinates
+
 			colour = (150, 150, 150)
-			if self.nodes[node].isInput():
+			if node.isInput():
 				colour = (50, 50, 255)
-			elif self.nodes[node].isOutput():
+			elif self.nodes[nodeIndex].isOutput():
 				colour = (50, 255, 50)
 
-			xCord = int((node[0]*50+25)*self.scale) + displacement[0]
-			yCord = int((node[1]*50+25)*self.scale) + displacement[1]
+			#circle
 			radius = int(20*self.scale)
-			pygame.draw.circle(surface, colour, (xCord, yCord), radius)
+			pygame.draw.circle(surface, colour, nodePosition, radius)
 
-			if self.nodes[node].isOutput() or self.nodes[node].isInput():
-				if self.nodes[node].getValue():
+		for nodeIndex in self.nodes:
+			node = self.getNode(nodeIndex)
+			nodePosition = self.getNodePosition(nodeIndex, displacement)  # on screen node coordinates
+			#connections
+			if node.connections[0] is not None:
+				otherNodePosition = self.getNodePosition(node.connections[0].coords, displacement)
+				pygame.draw.aaline(surface, (0, 0, 255), nodePosition, otherNodePosition, 2)
+			if node.connections[1] is not None:
+				otherNodePosition = self.getNodePosition(node.connections[1].coords, displacement)
+				pygame.draw.aaline(surface, (0, 0, 255), nodePosition, otherNodePosition, 2)
+
+		for nodeIndex in self.nodes:
+			node = self.getNode(nodeIndex)
+			nodePosition = self.getNodePosition(nodeIndex, displacement)  # on screen node coordinates
+			#value
+			if node.isOutput() or node.isInput():
+				if node.getValue():
 					nodeValue = "1"
 				else:
 					nodeValue = "0"
@@ -56,7 +75,8 @@ class Grid:
 				self.mainFont = pygame.font.Font(None, 24)
 
 				nodeText = self.mainFont.render(nodeValue, 1, (255, 255, 255))
-				surface.blit(nodeText, (xCord - int(nodeText.get_width()/2), yCord - int(nodeText.get_height()/2)))
+				surface.blit(nodeText, (nodePosition[0] - int(nodeText.get_width()/2), nodePosition[1] - int(nodeText.get_height()/2)))
+
 
 	def gridClick(self, position, button):  # position includes displacement
 		clickCoord = self.getClickCoord(position)
@@ -69,7 +89,7 @@ class Grid:
 			self.deleteNode(clickCoord)
 
 	#calculates the position of a click in grid coordinates
-	def getClickCoord(self,position):
+	def getClickCoord(self, position):
 		xCord = position[0] // self.baseGridSize
 		yCord = position[1] // self.baseGridSize
 		return(xCord, yCord)
@@ -99,11 +119,15 @@ class Grid:
 
 	#connects each node to the one below and to the right of it
 	def connectNodes(self):
+		right = (1, 0)
+		left = (-1, 0)
+		above = (0, -1)
+		below = (0, 1)
 		for node in self.nodes:
 			if self.isNode(below, node):
 				self.getNode(node).connect(0, self.getNode(below, node))
 			if self.isNode(right, node):
-				self.getNode(node).connect(0, self.getNode(right, node))
+				self.getNode(node).connect(1, self.getNode(right, node))
 
 	#check if node is at coords
 	#if a node is passed then the coords are relative to that
@@ -125,3 +149,9 @@ class Grid:
 		if self.isNode(pos):
 			return self.nodes[pos]
 		return None
+
+	# work out the on screen coordinates of a node from it's grid coordinates
+	def getNodePosition(self, coords, displacement):
+		xCord = int((coords[0]*50+25)*self.scale) + displacement[0]
+		yCord = int((coords[1]*50+25)*self.scale) + displacement[1]
+		return (xCord, yCord)
