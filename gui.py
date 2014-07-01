@@ -12,7 +12,7 @@ class Gui:
 		self.variables["scale"] = 1.0
 
 		self.createElements()
-		print ("Created gui")
+		print("Created gui")
 
 	def drawAll(self, surface):
 		for widget in self.elements:
@@ -22,6 +22,7 @@ class Gui:
 	def createElements(self):
 		self.elements["fps"] = Widget("fps: ", self.mainFont, (0, 0), self.variables["clock"].get_fps(), True)
 		self.elements["scale"] = Widget("scale: ", self.mainFont, (0, self.elements["fps"].height), self.variables["scale"], True)
+
 		self.containers["infoBox"] = Container(self.window, [0, 0], [5, 5])
 		self.containers["infoBox"].addElement(self.elements["scale"])
 		self.containers["infoBox"].addElement(self.elements["fps"])
@@ -36,10 +37,12 @@ class Gui:
 			if self.elements[item].changes:
 				self.elements[item].render()
 		for item in self.containers:
+			self.containers[item].move()
 			self.containers[item].updateWidth()
 			self.containers[item].updateHeight()
 			self.containers[item].updatePosition()
 			self.containers[item].positionElements()
+
 
 #holds references to elements and adjust their position to fit into a container
 class Container:
@@ -48,6 +51,8 @@ class Container:
 		self.window = window
 		self.position = "left"
 		self.coords = coords
+		self.target = coords
+		self.speed = 5  # (coords - target)/speed therefore higher values are slower
 		self.spacing = spacing
 		self.width = width
 		self.height = height
@@ -99,6 +104,16 @@ class Container:
 				previousElement = self.elements[index - 1]
 				newYPos = previousElement.getYCoords() + previousElement.getHeight() + spacing[1]
 				self.elements[index].setCoords((self.coords[0] + spacing[0], newYPos))
+
+	def setTarget(self, target):
+		print("target type :", type(target))
+		self.target = target
+
+	#moves the container towards the target at it's speed
+	def move(self):
+		if self.coords is not self.target:
+			self.coords[0] += (self.coords[0] - self.target[0]) / self.speed
+			self.coords[1] += (self.coords[1] - self.target[1]) / self.speed
 
 
 class Widget:

@@ -1,17 +1,21 @@
 from pygame import *
 
 class MouseInput:
-	mouseButtonDown = False
-
 	def __init__(self, window):
 		print("Mouse input started")
 		self.window = window
+		self.grid = self.window.getGrid()
 
+		self.mouseButtonDown = False
 		self.mousePosition = [0, 0]
 		self.previousMousePosition = [0, 0]
 		self.displacedMousePos = [0, 0]
 		self.mouseDownPosition = [0, 0]
 		self.mouseUpPosition = [0, 0]
+
+		#A list of areas that respond to clicks and their objects
+		#used to make buttons
+		self.clickSurface = []
 
 	def mouseDown(self, position):
 		self.mouseDownPosition = mouse.get_pos()
@@ -22,8 +26,12 @@ class MouseInput:
 		self.mouseUpPosition = mouse.get_pos()
 		if self.isClick():
 			self.displacedPosition(displacement)
-			self.window.getGrid().gridClick(self.displacedMousePos, button)
-			self.window.updateGrid()
+			if self.grid.gridClick(self.displacedMousePos, button):  # if a node is added
+				self.window.updateGrid()
+			else:  # select node and draw and draw info into box
+				coords = self.grid.getClickCoord(self.displacedMousePos)
+				node = self.grid.getNode(coords)
+				print("drawing info:", node)
 
 	def isMouseClicked(self):
 		return self.mouseButtonDown
@@ -47,3 +55,5 @@ class MouseInput:
 	def displacedPosition(self, displacement):
 		self.displacedMousePos[0] = self.previousMousePosition[0] - displacement[0]
 		self.displacedMousePos[1] = self.previousMousePosition[1] - displacement[1]
+
+

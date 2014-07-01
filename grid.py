@@ -14,13 +14,18 @@ class Grid:
 		self.scale = scale
 
 	def addNode(self, coords):
-		self.nodes[coords] = Node.Node()
-		self.setAllNodes()
+		if not self.getNode(coords):
+			self.nodes[coords] = Node.Node()
+			self.setAllNodes()
+			return True
+		return False
 
 	def deleteNode(self, coords):
 		if coords in self.nodes:
 			del self.nodes[coords]
 			self.setAllNodes()
+			return True
+		return False
 
 	#prints all nodes to console on their own line
 	def printNodes(self):
@@ -56,7 +61,10 @@ class Grid:
 	def gridClick(self, position, button):  # position includes displacement
 		clickCoord = self.getClickCoord(position)
 		if button == 1:
-			self.addNode(clickCoord)
+			if self.addNode(clickCoord):
+				return True
+			else:
+				return False
 		elif button == 3:
 			self.deleteNode(clickCoord)
 
