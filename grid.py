@@ -18,6 +18,7 @@ class Grid:
 			self.nodes[coords] = Node.Node(coords)
 			self.setAllNodes()
 			self.connectNodes()
+			self.getValueString("output")
 			return True
 		return False
 
@@ -28,12 +29,6 @@ class Grid:
 			self.connectNodes()
 			return True
 		return False
-
-	#prints all nodes to console on their own line
-	def printNodes(self):
-		print("Nodes:")
-		for item in self.nodes:
-			print(" ", item)
 
 	#draws all nodes to the surface that is passed to it
 	def drawNodes(self, surface, displacement):
@@ -155,3 +150,39 @@ class Grid:
 		xCord = int((coords[0]*50+25)*self.scale) + displacement[0]
 		yCord = int((coords[1]*50+25)*self.scale) + displacement[1]
 		return (xCord, yCord)
+
+	def getNodes(self, type="default"):
+		nodeList = []
+		for nodeIndex in self.nodes:
+			node = self.getNode(nodeIndex)
+			if type is "input":
+				if node.isInput():
+					nodeList.append(nodeIndex)
+			elif type is "output":
+				if node.isOutput():
+					nodeList.append(nodeIndex)
+			else:
+				nodeList.append(nodeIndex)
+
+		nodeList.sort()
+		print(type, " nodes = ", nodeList)
+		return nodeList
+
+
+	def getValueString(self, type):
+		assert isinstance(type, str)
+		nodeList = self.getNodes(type)
+		value = ""
+
+		if len(nodeList) is 0:
+			return value
+
+		for nodeIndex in nodeList:
+			node = self.getNode(nodeIndex)
+			if node.getValue() is True:
+				value += "1"
+			else:
+				value += "0"
+
+		print(type, "String:", value)
+		return value

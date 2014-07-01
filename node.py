@@ -7,6 +7,7 @@ class Node:
 		self.value = random.choice((True, False))
 		self.connections = [None, None]  # 0 is down 1 is right
 		self.coords = coords
+
 	def becomeInput(self):
 		self.type = "input"
 
