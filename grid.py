@@ -90,8 +90,8 @@ class Grid:
 
 	#calculates the position of a click in grid coordinates
 	def getClickCoord(self, position):
-		xCord = position[0] // self.baseGridSize
-		yCord = position[1] // self.baseGridSize
+		xCord = position[0] // (self.baseGridSize * self.scale)
+		yCord = position[1] // (self.baseGridSize * self.scale)
 		return(xCord, yCord)
 
 	#checks every node and changes it's type if needed
