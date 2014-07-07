@@ -13,10 +13,6 @@ class MouseInput:
 		self.mouseDownPosition = [0, 0]
 		self.mouseUpPosition = [0, 0]
 
-		#A list of areas that respond to clicks and their objects
-		#used to make buttons
-		self.clickSurface = []
-
 	def mouseDown(self, position):
 		self.mouseDownPosition = mouse.get_pos()
 		self.mouseButtonDown = True
@@ -55,5 +51,3 @@ class MouseInput:
 	def displacedPosition(self, displacement):
 		self.displacedMousePos[0] = self.previousMousePosition[0] - displacement[0]
 		self.displacedMousePos[1] = self.previousMousePosition[1] - displacement[1]
-
-
