@@ -5,6 +5,7 @@ import gui as Gui
 import grid as Grid
 from reference import colour
 
+
 class Window():
 	def __init__(self, variables):
 		self.window = pygame.display.set_mode((0, 0), RESIZABLE)
@@ -16,7 +17,7 @@ class Window():
 
 		#surfaces
 		self.gridSurface = pygame.Surface(self.size)
-		self.guiSurface  = pygame.Surface(self.size, pygame.SRCALPHA, 32).convert_alpha()
+		self.guiSurface = pygame.Surface(self.size, pygame.SRCALPHA, 32).convert_alpha()
 		print("Creating Window ", self.size)
 
 		self.grid = Grid.Grid(self.scale, self.baseGridSize)

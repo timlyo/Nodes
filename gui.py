@@ -3,6 +3,7 @@ import pygame
 from widget import Widget
 from container import Container
 
+
 class Gui:
 	def __init__(self, variables, window):
 		self.mainFont = pygame.font.Font(None, 24)

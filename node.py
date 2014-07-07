@@ -1,5 +1,6 @@
 import random
 
+
 class Node:
 	def __init__(self, coords):
 		print("node created")

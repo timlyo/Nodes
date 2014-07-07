@@ -1,5 +1,6 @@
 from pygame import *
 
+
 class MouseInput:
 	def __init__(self, window):
 		print("Mouse input started")
