@@ -29,7 +29,7 @@ class MouseInput:
 				coords = self.grid.getClickCoord(self.displacedMousePos)
 				node = self.grid.getNode(coords)
 				self.window.updateGrid()
-				print("drawing info:", node)
+				self.grid.activateNode(node)
 
 	def isMouseClicked(self):
 		return self.mouseButtonDown

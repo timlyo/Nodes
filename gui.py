@@ -29,15 +29,20 @@ class Gui:
 		self.elements["fps"] = Widget("fps: ", self.mainFont, (0, 0), self.variables["clock"].get_fps(), True)
 		self.elements["scale"] = Widget("scale: ", self.mainFont, (0, self.elements["fps"].height), self.variables["scale"], True)
 
-		#info box stuff
-
+		#node info box stuff(prefix with an n)
+		self.elements["nPos"] = Widget("Position: ", self.mainFont, (0, 0))
+		self.elements["nValue"] = Widget("Value: ", self.mainFont, (0, 0))
 
 	def createContainers(self):
-		self.containers["infoBox"] = Container(self.window, [0, 0], [5, 5])
-		self.containers["infoBox"].addElement(self.elements["scale"])
-		self.containers["infoBox"].addElement(self.elements["fps"])
-		self.containers["infoBox"].setPosition("right")
+		self.containers["feedback"] = Container(self.window, [0, 0], [5, 5])
+		self.containers["feedback"].addElement(self.elements["scale"])
+		self.containers["feedback"].addElement(self.elements["fps"])
+		self.containers["feedback"].setPosition("right")
 
+		self.containers["infoBox"] = Container(self.window, [0, 0], [5, 5])
+		self.containers["infoBox"].addElement(self.elements["nPos"])
+		self.containers["infoBox"].addElement(self.elements["nValue"])
+		self.containers["infoBox"].setPosition("left")
 
 	def updateVariable(self, key, value):
 		self.elements[key].variable = value

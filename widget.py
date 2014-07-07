@@ -1,6 +1,7 @@
 class Widget:
 	def __init__(self, text, font, coords, variable="", changes=False):
 		self.text = text
+		self.finalText = ""
 		self.font = font
 		self.coords = coords
 		self.variable = variable
@@ -11,7 +12,10 @@ class Widget:
 		self.render()
 
 	def render(self):
-		self.finalText = self.text + str(round(self.variable, 2))
+		if self.variable is not "":
+			self.finalText = self.text + str(round(self.variable, 2))
+		else:
+			self.finalText = self.text
 		self.surface = self.font.render(self.finalText, 1, (255, 255, 255))
 		self.height = self.surface.get_height()
 

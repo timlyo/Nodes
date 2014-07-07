@@ -11,6 +11,16 @@ class Grid:
 		self.scale = scale
 		self.baseGridSize = baseGridSize
 		self.mainFont = pygame.font.Font(None, 24)
+		self.activeNode = None
+
+	#sets the active node variable that is used for the infobox
+	def activateNode(self, node):
+		assert isinstance(node, Node)
+		self.activeNode = node
+		print(node, " is now active")
+
+	def getActiveNode(self):
+		return self.activeNode
 
 	def updateScale(self, scale):
 		self.scale = scale
@@ -34,6 +44,7 @@ class Grid:
 
 	#draws all nodes to the surface that is passed to it
 	def drawNodes(self, surface, displacement):
+		#draw circles
 		for nodeIndex in self.nodes:
 			node = self.getNode(nodeIndex)
 			nodePosition = self.getNodePosition(nodeIndex, displacement)  # on screen node coordinates
@@ -48,20 +59,22 @@ class Grid:
 			radius = int(20 * self.scale)
 			pygame.draw.circle(surface, nodeColour, nodePosition, radius)
 
+		#draw connecting lines
 		for nodeIndex in self.nodes:
 			node = self.getNode(nodeIndex)
 			nodePosition = self.getNodePosition(nodeIndex, displacement)  # on screen node coordinates
 			#connections
 			if node.connections[0] is not None:
 				otherNodePosition = self.getNodePosition(node.connections[0].coords, displacement)
-				pygame.draw.aaline(surface, (0, 0, 255), nodePosition, otherNodePosition, 2)
+				pygame.draw.aaline(surface, colour.blue, nodePosition, otherNodePosition, 2)
 			if node.connections[1] is not None:
 				otherNodePosition = self.getNodePosition(node.connections[1].coords, displacement)
-				pygame.draw.aaline(surface, (0, 0, 255), nodePosition, otherNodePosition, 2)
+				pygame.draw.aaline(surface, colour.blue, nodePosition, otherNodePosition, 2)
 
+		#draw value of node
 		for nodeIndex in self.nodes:
 			node = self.getNode(nodeIndex)
-			nodePosition = self.getNodePosition(nodeIndex, displacement)  # on screen node coordinates
+			nodePos = self.getNodePosition(nodeIndex, displacement)  # on screen node coordinates
 			#value
 			if node.isOutput() or node.isInput():
 				if node.getValue():
@@ -69,8 +82,8 @@ class Grid:
 				else:
 					nodeValue = "0"
 
-				nodeText = self.mainFont.render(nodeValue, 1, (255, 255, 255))
-				surface.blit(nodeText, (nodePosition[0] - int(nodeText.get_width()/2), nodePosition[1] - int(nodeText.get_height()/2)))
+				nodeText = self.mainFont.render(nodeValue, 1, colour.white)
+				surface.blit(nodeText, (nodePos[0] - int(nodeText.get_width()/2), nodePos[1] - int(nodeText.get_height()/2)))
 
 	def gridClick(self, position, button):  # position includes displacement
 		clickCoord = self.getClickCoord(position)
