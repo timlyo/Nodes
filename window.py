@@ -3,6 +3,7 @@ from pygame.locals import *
 
 import gui as Gui
 import grid as Grid
+from reference import colour
 
 class Window():
 	def __init__(self, variables):
@@ -23,7 +24,7 @@ class Window():
 		self.gridChanged = True
 
 	def clear(self):
-		self.window.fill((0, 0, 0))
+		self.window.fill(colour.black)
 
 	def update(self):
 		self.gui.updateVariable("scale", self.scale)
@@ -35,17 +36,17 @@ class Window():
 		self.gridChanged = True
 		print("Window resized to ", newSizeX, "x", newSizeY)
 
-	def blit(self, source, dest=(0,0)):
-		self.window.blit(source,dest)
+	def blit(self, source, dest=(0, 0)):
+		self.window.blit(source, dest)
 
 	def zoomOut(self):
-		if(self.scale > 0.51):
+		if self.scale > 0.51:
 			self.scale -= 0.1
 			self.grid.updateScale(self.scale)
 			self.gridChanged = True
 
 	def zoomIn(self):
-		if(self.scale < 3):
+		if self.scale < 3:
 			self.scale += 0.1
 			self.grid.updateScale(self.scale)
 			self.gridChanged = True
@@ -55,7 +56,7 @@ class Window():
 	
 	def drawGridLines(self, displacement):
 		if self.gridChanged:
-			self.gridSurface.fill((0, 0, 0))
+			self.gridSurface.fill(colour.black)
 			self.gridSize = int(self.baseGridSize * self.scale)
 			rects = []
 
@@ -65,7 +66,7 @@ class Window():
 					height = y*self.gridSize+(displacement[1] % self.gridSize) - self.gridSize
 					rects.append(Rect(width, height, self.gridSize, self.gridSize))
 			for item in rects:
-				pygame.draw.rect(self.gridSurface, (0,0,200), item, 1)
+				pygame.draw.rect(self.gridSurface, colour.blue, item, 1)
 			self.gridChanged = False
 
 	def drawNodes(self, displacement):
@@ -78,7 +79,7 @@ class Window():
 	#GUI Functions
 	def drawGui(self):
 		self.gui.updateElements()
-		self.guiSurface.fill((0,0,0,0))
+		self.guiSurface.fill(colour.transparent)
 		self.gui.drawAll(self.guiSurface)
 
 	def updateGuiVariable(self, key, value):

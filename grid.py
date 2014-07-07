@@ -1,6 +1,7 @@
 import node as Node
 
 import pygame
+from reference import colour
 
 
 class Grid:
@@ -37,15 +38,15 @@ class Grid:
 			node = self.getNode(nodeIndex)
 			nodePosition = self.getNodePosition(nodeIndex, displacement)  # on screen node coordinates
 
-			colour = (150, 150, 150)
+			nodeColour = colour.grey
 			if node.isInput():
-				colour = (50, 50, 255)
+				nodeColour = colour.blue
 			elif self.nodes[nodeIndex].isOutput():
-				colour = (50, 255, 50)
+				nodeColour = colour.green
 
 			#circle
-			radius = int(20*self.scale)
-			pygame.draw.circle(surface, colour, nodePosition, radius)
+			radius = int(20 * self.scale)
+			pygame.draw.circle(surface, nodeColour, nodePosition, radius)
 
 		for nodeIndex in self.nodes:
 			node = self.getNode(nodeIndex)
