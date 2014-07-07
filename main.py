@@ -15,6 +15,7 @@ def main():
 	variables["clock"] = clock
 
 	window = Window.Window(variables)
+	grid = window.getGrid()
 	mouseInput = Input.MouseInput(window)
 
 	displacement = [0, 0]

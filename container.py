@@ -24,8 +24,8 @@ class Container:
 			self.coords[1] = 0
 		elif self.position == "right":
 			self.coords[0] = self.window.getWidth() - self.width
-		elif not isinstance(position, str):
-			print("Position of type ", type(position), " not recognised")
+		elif not isinstance(self.position, str):
+			print("Position of type ", type(self.position), " not recognised")
 			return
 
 	#sets the container width to the width of the widest element

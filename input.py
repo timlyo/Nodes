@@ -14,12 +14,12 @@ class MouseInput:
 		self.mouseUpPosition = [0, 0]
 
 	def mouseDown(self, position):
-		self.mouseDownPosition = mouse.get_pos()
+		self.mouseDownPosition = position
 		self.mouseButtonDown = True
 
 	def mouseUp(self, position, displacement, button):
 		self.mouseButtonDown = False
-		self.mouseUpPosition = mouse.get_pos()
+		self.mouseUpPosition = position
 		if self.isClick():
 			self.displacedPosition(displacement)
 			if self.grid.gridClick(self.displacedMousePos, button):  # if a node is added
@@ -27,6 +27,7 @@ class MouseInput:
 			else:  # select node and draw and draw info into box
 				coords = self.grid.getClickCoord(self.displacedMousePos)
 				node = self.grid.getNode(coords)
+				self.window.updateGrid()
 				print("drawing info:", node)
 
 	def isMouseClicked(self):

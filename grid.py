@@ -2,13 +2,14 @@ import node as Node
 
 import pygame
 
+
 class Grid:
 	def __init__(self, scale, baseGridSize):
 		print("Created Grid")
 		self.nodes = {}
 		self.scale = scale
 		self.baseGridSize = baseGridSize
-
+		self.mainFont = pygame.font.Font(None, 24)
 
 	def updateScale(self, scale):
 		self.scale = scale
@@ -67,11 +68,8 @@ class Grid:
 				else:
 					nodeValue = "0"
 
-				self.mainFont = pygame.font.Font(None, 24)
-
 				nodeText = self.mainFont.render(nodeValue, 1, (255, 255, 255))
 				surface.blit(nodeText, (nodePosition[0] - int(nodeText.get_width()/2), nodePosition[1] - int(nodeText.get_height()/2)))
-
 
 	def gridClick(self, position, button):  # position includes displacement
 		clickCoord = self.getClickCoord(position)
@@ -87,7 +85,7 @@ class Grid:
 	def getClickCoord(self, position):
 		xCord = position[0] // (self.baseGridSize * self.scale)
 		yCord = position[1] // (self.baseGridSize * self.scale)
-		return(xCord, yCord)
+		return xCord, yCord
 
 	#checks every node and changes it's type if needed
 	def setAllNodes(self):
