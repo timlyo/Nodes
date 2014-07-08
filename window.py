@@ -70,6 +70,9 @@ class Window():
 				pygame.draw.rect(self.gridSurface, colour.blue, item, 1)
 			self.gridChanged = False
 
+	def updateNodes(self):
+		self.grid.updateNodes()
+
 	def drawNodes(self, displacement):
 		self.grid.drawNodes(self.gridSurface, displacement)
 

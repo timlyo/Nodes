@@ -13,7 +13,9 @@ class Grid:
 		self.mainFont = pygame.font.Font(None, 24)
 		self.activeNode = None
 
-	#sets the active node variable that is used for the infobox
+		self.iterator = 100  # used for node connection animations
+
+	# sets the active node variable that is used for the node info box
 	def activateNode(self, node):
 		#assert isinstance(node, Node)
 		self.activeNode = node
@@ -42,6 +44,12 @@ class Grid:
 			return True
 		return False
 
+	def updateNodes(self):
+		for nodeIndex in self.nodes:
+			node = self.getNode(nodeIndex)
+			if node.isInput():
+				pass
+
 	#draws all nodes to the surface that is passed to it
 	def drawNodes(self, surface, displacement):
 		#draw circles
@@ -60,16 +68,31 @@ class Grid:
 			pygame.draw.circle(surface, nodeColour, nodePosition, radius)
 
 		#draw connecting lines
+		if self.iterator > 1:
+			self.iterator -= 2
+		else:
+			self.iterator = 100
 		for nodeIndex in self.nodes:
 			node = self.getNode(nodeIndex)
 			nodePosition = self.getNodePosition(nodeIndex, displacement)  # on screen node coordinates
 			#connections
-			if node.connections[0] is not None:
-				otherNodePosition = self.getNodePosition(node.connections[0].coords, displacement)
+			if node.connection[0] is not None:
+				otherNodePosition = self.getNodePosition(node.connection[0].coords, displacement)
 				pygame.draw.aaline(surface, colour.blue, nodePosition, otherNodePosition, 2)
-			if node.connections[1] is not None:
-				otherNodePosition = self.getNodePosition(node.connections[1].coords, displacement)
+
+				dotPos = [0, 0]
+				dotPos[0] = int(otherNodePosition[0] - (otherNodePosition[0] - nodePosition[0]) * (self.iterator / 100))
+				dotPos[1] = nodePosition[1]
+				surface.set_at(dotPos, colour.white)
+
+			if node.connection[1] is not None:
+				otherNodePosition = self.getNodePosition(node.connection[1].coords, displacement)
 				pygame.draw.aaline(surface, colour.blue, nodePosition, otherNodePosition, 2)
+
+				dotPos = [0, 0]
+				dotPos[0] = nodePosition[0]
+				dotPos[1] = int(otherNodePosition[1] - (otherNodePosition[1] - nodePosition[1]) * (self.iterator / 100))
+				surface.set_at(dotPos, colour.white)
 
 		#draw value of node
 		for nodeIndex in self.nodes:
@@ -83,7 +106,7 @@ class Grid:
 					nodeValue = "0"
 
 				nodeText = self.mainFont.render(nodeValue, 1, colour.white)
-				surface.blit(nodeText, (nodePos[0] - int(nodeText.get_width()/2), nodePos[1] - int(nodeText.get_height()/2)))
+				surface.blit(nodeText, (nodePos[0] - int(nodeText.get_width() / 2), nodePos[1] - int(nodeText.get_height() / 2)))
 
 	def gridClick(self, position, button):  # position includes displacement
 		clickCoord = self.getClickCoord(position)
@@ -127,19 +150,33 @@ class Grid:
 	#connects each node to the one below and to the right of it
 	def connectNodes(self):
 		right = (1, 0)
-		left = (-1, 0)
-		above = (0, -1)
 		below = (0, 1)
 		for node in self.nodes:
 			if self.isNode(below, node):
-				self.getNode(node).connect(0, self.getNode(below, node))
+				if self.getNode(below, node).isDefault():
+					self.getNode(node).connect(1, self.getNode(below, node))
+				if self.getNode(node).isDefault() and self.getNode(below, node).isOutput():
+					self.getNode(node).connect(1, self.getNode(below, node))
 			if self.isNode(right, node):
-				self.getNode(node).connect(1, self.getNode(right, node))
+				if self.getNode(right, node).isDefault():
+					self.getNode(node).connect(0, self.getNode(right, node))
+		self.pruneConnections()
+
+	#removes unneeded connections from grid
+	def pruneConnections(self):
+		right = (1, 0)
+		below = (0, 1)
+		for nodeIndex in self.nodes:
+			node = self.getNode(nodeIndex)
+			if not self.isNode(right, nodeIndex):
+				node.disConnect(0)
+			if not self.isNode(below, nodeIndex):
+				node.disConnect(1)
 
 	#check if node is at coords
 	#if a node is passed then the coords are relative to that
 	def isNode(self, coords, node=None):
-		if node != None:
+		if node is not None:
 			pos = (coords[0] + node[0], coords[1] + node[1])
 		else:
 			pos = coords
@@ -149,7 +186,7 @@ class Grid:
 
 	#checks if a node exists and then returns it
 	def getNode(self, coords, node=None):
-		if node != None:
+		if node is not None:
 			pos = (coords[0] + node[0], coords[1] + node[1])
 		else:
 			pos = coords
@@ -159,8 +196,8 @@ class Grid:
 
 	# work out the on screen coordinates of a node from it's grid coordinates
 	def getNodePosition(self, coords, displacement):
-		xCord = int((coords[0]*50+25)*self.scale) + displacement[0]
-		yCord = int((coords[1]*50+25)*self.scale) + displacement[1]
+		xCord = int((coords[0] * 50 + 25) * self.scale) + displacement[0]
+		yCord = int((coords[1] * 50 + 25) * self.scale) + displacement[1]
 		return (xCord, yCord)
 
 	def getNodes(self, type="default"):
@@ -179,7 +216,6 @@ class Grid:
 		nodeList.sort()
 		print(type, " nodes = ", nodeList)
 		return nodeList
-
 
 	def getValueString(self, type):
 		assert isinstance(type, str)

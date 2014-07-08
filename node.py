@@ -6,8 +6,9 @@ class Node:
 		print("node created")
 		self.type = "default"
 		self.value = random.choice((True, False))
-		self.connections = [None, None]  # 0 is down 1 is right
+		self.connection = [None, None]  # 0 is right 1 is down
 		self.coords = coords
+		self.changed = True
 
 	def becomeInput(self):
 		self.type = "input"
@@ -38,4 +39,18 @@ class Node:
 
 	def connect(self, index, node):
 		assert 0 <= index <= 1
-		self.connections[index] = node
+		self.connection[index] = node
+
+	def disConnect(self, connection):
+		self.connection[connection] = None
+
+	#function called by other nodes when they pass data through
+	def input(self, value, connection):
+		self.changed = True
+		if self.isOutput():
+			self.value = value
+		self.connection[connection].input(value)
+
+	#called when an input node is updated
+	#passes value to  connections
+	#def passData(self):

@@ -61,6 +61,7 @@ def main():
 		#rendering
 		window.clear()
 		window.drawGridLines(displacement)
+		window.updateNodes()
 		window.drawNodes(displacement)
 		window.drawGui()
 		window.blitSurfaces()
