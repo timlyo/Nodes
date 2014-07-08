@@ -96,3 +96,6 @@ class Window():
 
 	def getWidth(self):
 		return self.window.get_width()
+
+	def getHeight(self):
+		return self.window.get_height()

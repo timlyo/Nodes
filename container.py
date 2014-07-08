@@ -1,6 +1,6 @@
 #holds references to elements and adjust their position to fit into a container
 class Container:
-	def __init__(self, window, coords=[0, 0], spacing=[0, 5], width=0, height=0):
+	def __init__(self, window, coords=(0, 0), spacing=(0, 5), width=0, height=0):
 		self.elements = []
 		self.window = window
 		self.position = "left"
@@ -11,22 +11,26 @@ class Container:
 		self.width = width
 		self.height = height
 
+		self.isShown = True
+
 	def addElement(self, element):
 		self.elements.append(element)
 
 	def setPosition(self, position):
+		assert isinstance(position, str)
 		self.position = position
 
 	def updatePosition(self):
 		if self.position == "left":
 			self.coords[0] = 0
-		elif self.position == "top":
-			self.coords[1] = 0
 		elif self.position == "right":
 			self.coords[0] = self.window.getWidth() - self.width
-		elif not isinstance(self.position, str):
-			print("Position of type ", type(self.position), " not recognised")
-			return
+			self.coords[1] = self.window.getHeight()/2 - self.height/2
+		elif self.position == "top":
+			self.coords[0] = self.window.getWidth()/2 - self.width/2
+			self.coords[1] = 0
+		elif self.position == "topRight":
+			self.coords[0] = self.window.getWidth() - self.width
 
 	#sets the container width to the width of the widest element
 	def updateWidth(self):
@@ -68,3 +72,9 @@ class Container:
 		if self.coords is not self.target:
 			self.coords[0] += (self.coords[0] - self.target[0]) / self.speed
 			self.coords[1] += (self.coords[1] - self.target[1]) / self.speed
+
+	def hide(self):
+		self.isShown = False
+
+	def show(self):
+		self.isShown = True

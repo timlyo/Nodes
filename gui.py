@@ -13,7 +13,7 @@ class Gui:
 		self.window = window
 		self.grid = self.window.getGrid()
 
-		#initial variable values
+		#initial variable values, only required for some that are created after the element
 		self.variables["scale"] = 1.0
 
 		self.createElements()
@@ -37,12 +37,13 @@ class Gui:
 		self.containers["feedback"] = Container(self.window, [0, 0], [5, 5])
 		self.containers["feedback"].addElement(self.elements["scale"])
 		self.containers["feedback"].addElement(self.elements["fps"])
-		self.containers["feedback"].setPosition("right")
+		self.containers["feedback"].setPosition("topRight")
 
-		self.containers["infoBox"] = Container(self.window, [0, 0], [5, 5])
-		self.containers["infoBox"].addElement(self.elements["nPos"])
-		self.containers["infoBox"].addElement(self.elements["nValue"])
-		self.containers["infoBox"].setPosition("left")
+		self.containers["nodeBox"] = Container(self.window, [0, 0], [5, 5])
+		self.containers["nodeBox"].addElement(self.elements["nPos"])
+		self.containers["nodeBox"].addElement(self.elements["nValue"])
+		self.containers["nodeBox"].setPosition("right")
+		self.containers["nodeBox"].hide()
 
 	def updateVariable(self, key, value):
 		self.elements[key].variable = value

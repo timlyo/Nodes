@@ -15,7 +15,7 @@ class Grid:
 
 	#sets the active node variable that is used for the infobox
 	def activateNode(self, node):
-		assert isinstance(node, Node)
+		#assert isinstance(node, Node)
 		self.activeNode = node
 		print(node, " is now active")
 
