@@ -27,7 +27,8 @@ class Gui:
 
 	def createElements(self):
 		self.elements["fps"] = Widget("fps: ", self.mainFont, (0, 0), self.variables["clock"].get_fps(), True)
-		self.elements["scale"] = Widget("scale: ", self.mainFont, (0, self.elements["fps"].height), self.variables["scale"], True)
+		self.elements["scale"] = Widget("scale: ", self.mainFont, (0, 0), self.variables["scale"], True)
+		self.elements["mousePos"] = Widget("mousePos: ", self.mainFont, (0, 0), self.variables["mousePos"], True)
 
 		#node info box stuff(prefix with an n)
 		self.elements["nValue"] = Widget("Value: ", self.mainFont, (0, 0), "", True)
@@ -41,6 +42,7 @@ class Gui:
 		self.containers["feedback"] = Container(self.window, [0, 0], [5, 5])
 		self.containers["feedback"].addElement(self.elements["scale"])
 		self.containers["feedback"].addElement(self.elements["fps"])
+		self.containers["feedback"].addElement(self.elements["mousePos"])
 		self.containers["feedback"].setPosition("topRight")
 
 		self.containers["nodeBox"] = Container(self.window, [0, 0], [5, 5])

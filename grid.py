@@ -109,7 +109,7 @@ class Grid:
 
 	#handles a click within the grid, returns true if a node is added
 	def gridClick(self, position, button):  # position includes displacement
-		clickCoord = self.getClickCoord(position)
+		clickCoord = self.getGridCoord(position)
 		if button == 1:
 			if self.addNode(clickCoord):
 				return True
@@ -119,7 +119,7 @@ class Grid:
 			self.deleteNode(clickCoord)
 
 	#calculates the position of a click in grid coordinates
-	def getClickCoord(self, position):
+	def getGridCoord(self, position):
 		xCord = position[0] // (self.baseGridSize * self.scale)
 		yCord = position[1] // (self.baseGridSize * self.scale)
 		return xCord, yCord

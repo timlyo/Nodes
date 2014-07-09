@@ -16,6 +16,7 @@ def main():
 	variables["input"] = ""
 	variables["output"] = ""
 	variables["activeNode"] = None
+	variables["mousePos"] = (0, 0)
 
 	window = Window.Window(variables)
 	grid = window.getGrid()
@@ -63,6 +64,7 @@ def main():
 
 		window.updateGuiVariable("oInput", str(grid.getValueString("input")))
 		window.updateGuiVariable("oOutput", str(grid.getValueString("output")))
+		window.updateGuiVariable("mousePos", grid.getGridCoord(pygame.mouse.get_pos()))
 		try:
 			window.updateGuiVariable("nValue", grid.getActiveNode().getValue())
 			window.updateGuiVariable("nPos", grid.getActiveNode().coords)

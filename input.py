@@ -26,7 +26,7 @@ class MouseInput:
 			if self.grid.gridClick(self.displacedMousePos, button):  # if a node is added
 				self.window.updateGrid()
 			else:  # select node and draw and draw info into box
-				coords = self.grid.getClickCoord(self.displacedMousePos)
+				coords = self.grid.getGridCoord(self.displacedMousePos)
 				node = self.grid.getNode(coords)
 				if button == 1:
 					self.grid.activateNode(node)
