@@ -30,7 +30,7 @@ class Grid:
 	def addNode(self, coords):
 		if not self.getNode(coords):
 			self.nodes[coords] = Node.Node(coords)
-			self.setAllNodes()
+			#self.setAllNodes()
 			self.connectNodes()
 			self.getValueString("output")
 			return True
@@ -39,7 +39,7 @@ class Grid:
 	def deleteNode(self, coords):
 		if coords in self.nodes:
 			del self.nodes[coords]
-			self.setAllNodes()
+			#self.setAllNodes()
 			self.connectNodes()
 			return True
 		return False
@@ -108,6 +108,7 @@ class Grid:
 				nodeText = self.mainFont.render(nodeValue, 1, colour.white)
 				surface.blit(nodeText, (nodePos[0] - int(nodeText.get_width() / 2), nodePos[1] - int(nodeText.get_height() / 2)))
 
+	#handles a click within the grid, returns true if a node is added
 	def gridClick(self, position, button):  # position includes displacement
 		clickCoord = self.getClickCoord(position)
 		if button == 1:
@@ -124,8 +125,8 @@ class Grid:
 		yCord = position[1] // (self.baseGridSize * self.scale)
 		return xCord, yCord
 
-	#checks every node and changes it's type if needed
-	def setAllNodes(self):
+	#checks every node and changes it's type if needed(depreciated)
+	def DsetAllNodes(self):
 		right = (1, 0)
 		left = (-1, 0)
 		above = (0, -1)
@@ -166,12 +167,28 @@ class Grid:
 	def pruneConnections(self):
 		right = (1, 0)
 		below = (0, 1)
+
 		for nodeIndex in self.nodes:
 			node = self.getNode(nodeIndex)
 			if not self.isNode(right, nodeIndex):
 				node.disConnect(0)
 			if not self.isNode(below, nodeIndex):
 				node.disConnect(1)
+
+			if node.isInput():
+				if node.connection[0] is not None:
+					if node.connection[0].isInput():
+						node.disConnect(0)
+				if node.connection[1] is not None:
+					if node.connection[1].isInput():
+						node.disConnect(1)
+			if node.isOutput():
+				if node.connection[0] is not None:
+					if node.connection[0].isOutput():
+						node.disConnect(0)
+				if node.connection[1] is not None:
+					if node.connection[1].isOutput():
+						node.disConnect(1)
 
 	#check if node is at coords
 	#if a node is passed then the coords are relative to that
@@ -234,3 +251,7 @@ class Grid:
 
 		print(type, "String:", value)
 		return value
+
+	def changeNodeType(self, node):
+		node.changeType()
+		self.connectNodes()

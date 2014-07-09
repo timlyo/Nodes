@@ -30,11 +30,11 @@ def main():
 				running = False
 
 			elif event.type == pygame.MOUSEBUTTONDOWN:
-				if event.button == 1 or event.button == 3:
+				if event.button == 1 or event.button == 2 or event.button == 3:
 					mouseInput.mouseDown(pygame.mouse.get_pos())
 
 			elif event.type == pygame.MOUSEBUTTONUP:
-				if event.button == 1 or event.button == 3:
+				if event.button == 1 or event.button == 2 or event.button == 3:
 					mouseInput.mouseUp(pygame.mouse.get_pos(), displacement, event.button)
 				elif event.button == 4:
 					window.zoomIn()

@@ -28,8 +28,12 @@ class MouseInput:
 			else:  # select node and draw and draw info into box
 				coords = self.grid.getClickCoord(self.displacedMousePos)
 				node = self.grid.getNode(coords)
+				if button == 1:
+					self.grid.activateNode(node)
+				elif button == 2:
+					self.grid.changeNodeType(node)
 				self.window.updateGrid()
-				self.grid.activateNode(node)
+
 
 	def isMouseClicked(self):
 		return self.mouseButtonDown

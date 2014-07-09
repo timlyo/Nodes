@@ -10,6 +10,14 @@ class Node:
 		self.coords = coords
 		self.changed = True
 
+	def changeType(self):
+		if self.isDefault():
+			self.becomeInput()
+		elif self.isInput():
+			self.becomeOutput()
+		elif self.isOutput():
+			self.becomeDefault()
+
 	def becomeInput(self):
 		self.type = "input"
 
