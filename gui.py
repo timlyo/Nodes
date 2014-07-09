@@ -30,8 +30,8 @@ class Gui:
 		self.elements["scale"] = Widget("scale: ", self.mainFont, (0, self.elements["fps"].height), self.variables["scale"], True)
 
 		#node info box stuff(prefix with an n)
-		self.elements["nPos"] = Widget("Position: ", self.mainFont, (0, 0))
-		self.elements["nValue"] = Widget("Value: ", self.mainFont, (0, 0))
+		self.elements["nValue"] = Widget("Value: ", self.mainFont, (0, 0), "", True)
+		self.elements["nPos"] = Widget("Position: ", self.mainFont, (0, 0), "", True)
 
 		#output box(prefix with o)
 		self.elements["oInput"]  = Widget("    Input: ", self.mainFont, (0, 0), self.variables["input"], True)

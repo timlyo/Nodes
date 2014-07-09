@@ -19,7 +19,7 @@ class Widget:
 	def render(self):
 		if self.shown:
 			if self.variable is not "":
-				if not isinstance(self.variable, str): # dont round a string
+				if isinstance(self.variable, float): # only round some types
 					round(self.variable, 2)
 				self.finalText = self.text + str(self.variable)
 			else:

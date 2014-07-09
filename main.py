@@ -15,6 +15,7 @@ def main():
 	variables["clock"] = clock
 	variables["input"] = ""
 	variables["output"] = ""
+	variables["activeNode"] = None
 
 	window = Window.Window(variables)
 	grid = window.getGrid()
@@ -62,6 +63,11 @@ def main():
 
 		window.updateGuiVariable("oInput", str(grid.getValueString("input")))
 		window.updateGuiVariable("oOutput", str(grid.getValueString("output")))
+		try:
+			window.updateGuiVariable("nValue", grid.getActiveNode().getValue())
+			window.updateGuiVariable("nPos", grid.getActiveNode().coords)
+		except AttributeError:
+			window.updateGuiVariable("nValue", "")
 
 		#rendering
 		window.clear()
