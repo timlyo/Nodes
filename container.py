@@ -18,19 +18,22 @@ class Container:
 
 	def setPosition(self, position):
 		assert isinstance(position, str)
-		self.position = position
+		self.position = position.lower()
 
 	def updatePosition(self):
 		if self.position == "left":
 			self.coords[0] = 0
 		elif self.position == "right":
-			self.coords[0] = self.window.getWidth() - self.width
+			self.coords[0] = self.window.getWidth() - self.width - self.spacing[0]
 			self.coords[1] = self.window.getHeight()/2 - self.height/2
 		elif self.position == "top":
 			self.coords[0] = self.window.getWidth()/2 - self.width/2
 			self.coords[1] = 0
-		elif self.position == "topRight":
-			self.coords[0] = self.window.getWidth() - self.width
+		elif self.position == "topright":
+			self.coords[0] = self.window.getWidth() - self.width - self.spacing[0]
+		elif self.position == "bottomright":
+			self.coords[0] = self.window.getWidth() - self.width - self.spacing[0]
+			self.coords[1] = self.window.getHeight() - self.height
 
 	#sets the container width to the width of the widest element
 	def updateWidth(self):
@@ -38,6 +41,7 @@ class Container:
 		for item in self.elements:
 			if item.getWidth() > width:
 				width = item.getWidth()
+				width += self.spacing[0]
 		self.width = width
 
 	#sets the container height to the total height of all elements
@@ -45,6 +49,7 @@ class Container:
 		height = 0
 		for item in self.elements:
 			height += item.getHeight()
+			height += self.spacing[1]
 		self.height = height
 
 	#position the container's elements

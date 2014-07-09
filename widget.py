@@ -19,7 +19,9 @@ class Widget:
 	def render(self):
 		if self.shown:
 			if self.variable is not "":
-				self.finalText = self.text + str(round(self.variable, 2))
+				if not isinstance(self.variable, str): # dont round a string
+					round(self.variable, 2)
+				self.finalText = self.text + str(self.variable)
 			else:
 				self.finalText = self.text
 			self.surface = self.font.render(self.finalText, 1, (255, 255, 255))

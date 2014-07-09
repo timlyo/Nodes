@@ -13,6 +13,8 @@ def main():
 
 	variables = dict()
 	variables["clock"] = clock
+	variables["input"] = ""
+	variables["output"] = ""
 
 	window = Window.Window(variables)
 	grid = window.getGrid()
@@ -57,6 +59,9 @@ def main():
 			window.gridChanged = True
 		else:
 			mouseInput.getMouseMovement()
+
+		window.updateGuiVariable("oInput", str(grid.getValueString("input")))
+		window.updateGuiVariable("oOutput", str(grid.getValueString("output")))
 
 		#rendering
 		window.clear()

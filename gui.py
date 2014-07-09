@@ -33,6 +33,10 @@ class Gui:
 		self.elements["nPos"] = Widget("Position: ", self.mainFont, (0, 0))
 		self.elements["nValue"] = Widget("Value: ", self.mainFont, (0, 0))
 
+		#output box(prefix with o)
+		self.elements["oInput"]  = Widget("    Input: ", self.mainFont, (0, 0), self.variables["input"], True)
+		self.elements["oOutput"] = Widget("Output: ", self.mainFont, (0, 0), self.variables["output"], True)
+
 	def createContainers(self):
 		self.containers["feedback"] = Container(self.window, [0, 0], [5, 5])
 		self.containers["feedback"].addElement(self.elements["scale"])
@@ -45,8 +49,15 @@ class Gui:
 		self.containers["nodeBox"].setPosition("right")
 		self.containers["nodeBox"].hide()
 
+		self.containers["outputBox"] = Container(self.window, [0, 0], [5, 5])
+		self.containers["outputBox"].addElement(self.elements["oInput"])
+		self.containers["outputBox"].addElement(self.elements["oOutput"])
+		self.containers["outputBox"].setPosition("bottomRight")
+
 	def updateVariable(self, key, value):
-		self.elements[key].variable = value
+		assert isinstance(key, str)
+		if key in self.elements:
+			self.elements[key].variable = value
 
 	def updateElements(self):
 		for item in self.elements:

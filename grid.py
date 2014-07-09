@@ -231,7 +231,6 @@ class Grid:
 				nodeList.append(nodeIndex)
 
 		nodeList.sort()
-		print(type, " nodes = ", nodeList)
 		return nodeList
 
 	def getValueString(self, type):
@@ -249,7 +248,6 @@ class Grid:
 			else:
 				value += "0"
 
-		print(type, "String:", value)
 		return value
 
 	def changeNodeType(self, node):
