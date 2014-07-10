@@ -1,3 +1,4 @@
+from file import File
 import window as Window
 import input as Input
 
@@ -83,6 +84,8 @@ def main():
 
 	print("==Shutting down==")
 	pygame.quit()
+
+	File.saveFile(grid.getNodeList())
 
 
 if __name__ == "__main__":

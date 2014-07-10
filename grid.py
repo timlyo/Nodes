@@ -1,5 +1,5 @@
+from file import File
 import node as Node
-
 import pygame
 from reference import colour
 
@@ -7,7 +7,7 @@ from reference import colour
 class Grid:
 	def __init__(self, scale, baseGridSize, window):
 		print("Created Grid")
-		self.nodes = {}
+		self.nodes = File.loadFile()
 		self.scale = scale
 		self.baseGridSize = baseGridSize
 		self.mainFont = pygame.font.Font(None, 24)
@@ -16,6 +16,9 @@ class Grid:
 		self.window = window
 
 		self.iterator = 100  # used for node connection animations
+
+	def getNodeList(self):
+		return self.nodes
 
 	# sets the active node variable that is used for the node info box
 	def activateNode(self, node):

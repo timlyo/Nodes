@@ -4,3 +4,4 @@
 *.sublime-project
 *.sublime-workspace
 __pycache__/
+*.dat
