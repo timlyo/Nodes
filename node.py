@@ -3,7 +3,6 @@ import random
 
 class Node:
 	def __init__(self, coords, value=None, type=None):
-		print("node created")
 		if value is not None:
 			self.value = random.choice((True, False))
 		else:

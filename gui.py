@@ -69,6 +69,7 @@ class Gui:
 
 	def updateElements(self):
 		for item in self.elements:
+			self.elements[item].update()
 			self.elements[item].render()
 		for item in self.containers:
 			self.containers[item].update()

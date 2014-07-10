@@ -36,16 +36,13 @@ class Grid:
 	def addNode(self, coords, value=None, type=None):
 		if not self.getNode(coords):
 			self.nodes[coords] = Node.Node(coords, value, type)
-			#self.setAllNodes()
 			self.connectNodes()
-			self.getValueString("output")
 			return True
 		return False
 
 	def deleteNode(self, coords):
 		if coords in self.nodes:
 			del self.nodes[coords]
-			#self.setAllNodes()
 			self.connectNodes()
 			return True
 		return False
@@ -125,8 +122,12 @@ class Grid:
 		elif button == 3:
 			self.deleteNode(clickCoord)
 
-	#calculates the position of a click in grid coordinates
 	def getGridCoord(self, position):
+		"""
+			calculates the position of a click in grid coordinates
+		:param position: on screen position of click
+		:return: grid position of click
+		"""
 		xCord = position[0] // (self.baseGridSize * self.scale)
 		yCord = position[1] // (self.baseGridSize * self.scale)
 		return xCord, yCord
@@ -259,3 +260,7 @@ class Grid:
 	def changeNodeType(self, node):
 		node.changeType()
 		self.connectNodes()
+
+	def clear(self):
+		self.nodes = {}
+

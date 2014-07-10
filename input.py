@@ -17,8 +17,17 @@ class MouseInput:
 		#list of rects where clicky things happen
 		self.clickFields = []
 
-	def addClickField(self, field):
-		self.clickFields.append(field)
+	def addClickField(self, field, object, index=None):
+		if index is None:
+			index = len(self.clickFields)
+		self.clickFields.insert(index, (field, object))
+		return index
+
+	def isInClickField(self, pos):
+		for item in self.clickFields:
+			if item[0].collidepoint(pos):
+				return item[1]
+		return False
 
 	def mouseDown(self, position):
 		self.mouseDownPosition = position
@@ -28,6 +37,12 @@ class MouseInput:
 		self.mouseButtonDown = False
 		self.mouseUpPosition = position
 		if self.isClick():
+			if button == 1:
+				clickObject = self.isInClickField(position)
+				if clickObject:
+					clickObject.click()
+					return
+
 			self.displacedPosition(displacement)
 			if self.grid.gridClick(self.displacedMousePos, button):  # if a node is added
 				self.window.updateGrid()
