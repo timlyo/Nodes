@@ -100,7 +100,6 @@ class Window():
 	def getGrid(self):
 		return self.grid
 
-
 	#window dimension functions
 	def getSize(self):
 		return self.size

@@ -217,7 +217,7 @@ class Grid:
 	def getNodePosition(self, coords, displacement):
 		xCord = int((coords[0] * 50 + 25) * self.scale) + displacement[0]
 		yCord = int((coords[1] * 50 + 25) * self.scale) + displacement[1]
-		return (xCord, yCord)
+		return xCord, yCord
 
 	def getNodes(self, type="default"):
 		nodeList = []

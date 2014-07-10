@@ -1,5 +1,6 @@
 import pygame
 
+
 class Widget:
 	def __init__(self, text, font, coords, variable="", changes=False):
 		self.text = text
@@ -19,7 +20,7 @@ class Widget:
 	def render(self):
 		if self.isShown:
 			if self.variable is not "":
-				if isinstance(self.variable, float): # only round some types
+				if isinstance(self.variable, float):  # only round some types
 					round(self.variable, 2)
 				self.finalText = self.text + str(self.variable)
 			else:

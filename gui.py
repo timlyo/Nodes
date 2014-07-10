@@ -35,7 +35,7 @@ class Gui:
 		self.elements["nPos"] = Widget("Position: ", self.mainFont, (0, 0), "", True)
 
 		#output box(prefix with o)
-		self.elements["oInput"]  = Widget("    Input: ", self.mainFont, (0, 0), self.variables["input"], True)
+		self.elements["oInput"] = Widget("    Input: ", self.mainFont, (0, 0), self.variables["input"], True)
 		self.elements["oOutput"] = Widget("Output: ", self.mainFont, (0, 0), self.variables["output"], True)
 
 	def createContainers(self):

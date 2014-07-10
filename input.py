@@ -34,7 +34,6 @@ class MouseInput:
 					self.grid.changeNodeType(node)
 				self.window.updateGrid()
 
-
 	def isMouseClicked(self):
 		return self.mouseButtonDown
 
@@ -43,7 +42,7 @@ class MouseInput:
 		self.previousMousePosition = self.mousePosition
 		self.mousePosition = mouse.get_pos()
 		return (self.mousePosition[0] - self.previousMousePosition[0],
-			self.mousePosition[1] - self.previousMousePosition[1])
+					self.mousePosition[1] - self.previousMousePosition[1])
 
 	#works out if the mouse has clicked or dragged(heuristic)
 	def isClick(self):
@@ -52,7 +51,6 @@ class MouseInput:
 		if abs(xMovement + yMovement) < 5:
 			return True
 		return False
-
 
 	def displacedPosition(self, displacement):
 		self.displacedMousePos[0] = self.previousMousePosition[0] - displacement[0]
