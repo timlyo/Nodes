@@ -14,6 +14,12 @@ class MouseInput:
 		self.mouseDownPosition = [0, 0]
 		self.mouseUpPosition = [0, 0]
 
+		#list of rects where clicky things happen
+		self.clickFields = []
+
+	def addClickField(self, field):
+		self.clickFields.append(field)
+
 	def mouseDown(self, position):
 		self.mouseDownPosition = position
 		self.mouseButtonDown = True

@@ -1,7 +1,10 @@
 import pygame
 
 from widget import Widget
+from button import Button
 from container import Container
+
+from reference import colour
 
 
 class Gui:
@@ -26,17 +29,20 @@ class Gui:
 			surface.blit(item.surface, item.coords)
 
 	def createElements(self):
-		self.elements["fps"] = Widget("fps: ", self.mainFont, (0, 0), self.variables["clock"].get_fps(), True)
-		self.elements["scale"] = Widget("scale: ", self.mainFont, (0, 0), self.variables["scale"], True)
-		self.elements["mousePos"] = Widget("mousePos: ", self.mainFont, (0, 0), self.variables["mousePos"], True)
+		self.elements["clearButton"] = Button("Clear", self.mainFont)
+		self.elements["clearButton"].setBackground(colour.grey)
+
+		self.elements["fps"] = Widget("fps: ", self.mainFont, (0, 0), self.variables["clock"].get_fps())
+		self.elements["scale"] = Widget("scale: ", self.mainFont, (0, 0), self.variables["scale"])
+		self.elements["mousePos"] = Widget("mousePos: ", self.mainFont, (0, 0), self.variables["mousePos"])
 
 		#node info box stuff(prefix with an n)
-		self.elements["nValue"] = Widget("Value: ", self.mainFont, (0, 0), "", True)
-		self.elements["nPos"] = Widget("Position: ", self.mainFont, (0, 0), "", True)
+		self.elements["nValue"] = Widget("Value: ", self.mainFont, (0, 0), "")
+		self.elements["nPos"] = Widget("Position: ", self.mainFont, (0, 0), "")
 
 		#output box(prefix with o)
-		self.elements["oInput"] = Widget("    Input: ", self.mainFont, (0, 0), self.variables["input"], True)
-		self.elements["oOutput"] = Widget("Output: ", self.mainFont, (0, 0), self.variables["output"], True)
+		self.elements["oInput"] = Widget("    Input: ", self.mainFont, (0, 0), self.variables["input"])
+		self.elements["oOutput"] = Widget("Output: ", self.mainFont, (0, 0), self.variables["output"])
 
 	def createContainers(self):
 		self.containers["feedback"] = Container(self.window, [0, 0], [5, 5])
@@ -63,7 +69,6 @@ class Gui:
 
 	def updateElements(self):
 		for item in self.elements:
-			if self.elements[item].changes:
-				self.elements[item].render()
+			self.elements[item].render()
 		for item in self.containers:
 			self.containers[item].update()

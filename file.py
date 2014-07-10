@@ -1,6 +1,7 @@
 from os.path import isfile
 from reference import Reference
 
+
 class File:
 	@staticmethod
 	def loadFile(grid):
@@ -19,7 +20,6 @@ class File:
 				grid.addNode(coords, line[2], line[3])
 
 		file.close()
-
 
 	@staticmethod
 	def saveFile(nodes):

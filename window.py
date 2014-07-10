@@ -82,6 +82,9 @@ class Window():
 
 	#GUI Functions
 	def drawGui(self):
+		"""
+			draws all elements of the gui
+		"""
 		self.gui.updateElements()
 		self.guiSurface.fill(colour.transparent)
 		self.gui.drawAll(self.guiSurface)

@@ -1,17 +1,19 @@
 import pygame
+from reference import colour
 
 
 class Widget:
-	def __init__(self, text, font, coords, variable="", changes=False):
+	def __init__(self, text, font, coords=(0, 0), variable="", padding=5):
 		self.text = text
 		self.finalText = ""
 		self.font = font
 		self.coords = coords
 		self.variable = variable
-		self.changes = changes
 		self.height = 0
 		self.width = 0
 		self.surface = pygame.Surface((0, 0))
+		self.background = colour.transparent
+		self.padding = padding
 
 		self.isShown = True
 
@@ -19,6 +21,7 @@ class Widget:
 
 	def render(self):
 		if self.isShown:
+			#string
 			if self.variable is not "":
 				if isinstance(self.variable, float):  # only round some types
 					round(self.variable, 2)
@@ -27,6 +30,13 @@ class Widget:
 				self.finalText = self.text
 			self.surface = self.font.render(self.finalText, 1, (255, 255, 255))
 			self.height = self.surface.get_height()
+			self.width = self.surface.get_width()
+
+			#background
+			background = pygame.Surface((self.width+(self.padding*2), self.height+(self.padding*2)))
+			background.fill(self.background)
+			background.blit(self.surface, (self.padding, self.padding))
+			self.surface = background
 		else:
 			self.surface = pygame.Surface((0, 0))
 
@@ -55,3 +65,8 @@ class Widget:
 
 	def show(self):
 		self.isShown = True
+
+	def setBackground(self, colour):
+		assert isinstance(colour, tuple)
+		self.background = colour
+		print(self, " background is now ", colour)
