@@ -20,6 +20,13 @@ class Container:
 		assert isinstance(position, str)
 		self.position = position.lower()
 
+	def update(self):
+		self.move()
+		self.updateWidth()
+		self.updateHeight()
+		self.updatePosition()
+		self.positionElements()
+
 	def updatePosition(self):
 		if self.position == "left":
 			self.coords[0] = 0
@@ -79,7 +86,10 @@ class Container:
 			self.coords[1] += (self.coords[1] - self.target[1]) / self.speed
 
 	def hide(self):
-		self.isShown = False
+		for item in self.elements:
+			print("hide ", item)
+			item.hide()
 
 	def show(self):
-		self.isShown = True
+		for item in self.elements:
+			item.show()

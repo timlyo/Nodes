@@ -20,7 +20,7 @@ class Window():
 		self.guiSurface = pygame.Surface(self.size, pygame.SRCALPHA, 32).convert_alpha()
 		print("Creating Window ", self.size)
 
-		self.grid = Grid.Grid(self.scale, self.baseGridSize)
+		self.grid = Grid.Grid(self.scale, self.baseGridSize, self)
 		self.gui = Gui.Gui(variables, self)
 		self.gridChanged = True
 
@@ -89,9 +89,17 @@ class Window():
 	def updateGuiVariable(self, key, value):
 		self.gui.updateVariable(key, value)
 
+	def showGuiContainer(self, container):
+		assert isinstance(container, str)
+		try:
+			self.gui.containers[container].show()
+		except KeyError:
+			print(container, " is not a recognised container. Called from window.py-showGuiContainer()")
+
 	#Data Functions
 	def getGrid(self):
 		return self.grid
+
 
 	#window dimension functions
 	def getSize(self):

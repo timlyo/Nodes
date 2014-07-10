@@ -12,12 +12,12 @@ class Widget:
 		self.width = 0
 		self.surface = pygame.Surface((0, 0))
 
-		self.shown = True
+		self.isShown = True
 
 		self.render()
 
 	def render(self):
-		if self.shown:
+		if self.isShown:
 			if self.variable is not "":
 				if isinstance(self.variable, float): # only round some types
 					round(self.variable, 2)
@@ -26,6 +26,8 @@ class Widget:
 				self.finalText = self.text
 			self.surface = self.font.render(self.finalText, 1, (255, 255, 255))
 			self.height = self.surface.get_height()
+		else:
+			self.surface = pygame.Surface((0, 0))
 
 	def getHeight(self):
 		try:
@@ -46,3 +48,9 @@ class Widget:
 
 	def getYCoords(self):
 		return self.coords[1]
+
+	def hide(self):
+		self.isShown = False
+
+	def show(self):
+		self.isShown = True

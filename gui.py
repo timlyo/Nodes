@@ -66,8 +66,4 @@ class Gui:
 			if self.elements[item].changes:
 				self.elements[item].render()
 		for item in self.containers:
-			self.containers[item].move()
-			self.containers[item].updateWidth()
-			self.containers[item].updateHeight()
-			self.containers[item].updatePosition()
-			self.containers[item].positionElements()
+			self.containers[item].update()
