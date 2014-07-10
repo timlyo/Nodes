@@ -2,10 +2,18 @@ import random
 
 
 class Node:
-	def __init__(self, coords):
+	def __init__(self, coords, value=None, type=None):
 		print("node created")
-		self.type = "default"
-		self.value = random.choice((True, False))
+		if value is not None:
+			self.value = random.choice((True, False))
+		else:
+			self.value = value
+
+		if type is not None:
+			self.type = type
+		else:
+			self.type = "default"
+
 		self.connection = [None, None]  # 0 is right 1 is down
 		self.coords = coords
 		self.changed = True

@@ -87,7 +87,6 @@ class Container:
 
 	def hide(self):
 		for item in self.elements:
-			print("hide ", item)
 			item.hide()
 
 	def show(self):

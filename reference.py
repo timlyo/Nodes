@@ -1,6 +1,6 @@
 class Reference:
 	version = "0.1"
-
+	saveFile = "save.dat"
 
 class colour:
 	white = (255, 255, 255)

@@ -7,7 +7,8 @@ from reference import colour
 class Grid:
 	def __init__(self, scale, baseGridSize, window):
 		print("Created Grid")
-		self.nodes = File.loadFile()
+		self.nodes = {}
+		File.loadFile(self)
 		self.scale = scale
 		self.baseGridSize = baseGridSize
 		self.mainFont = pygame.font.Font(None, 24)
@@ -32,9 +33,9 @@ class Grid:
 	def updateScale(self, scale):
 		self.scale = scale
 
-	def addNode(self, coords):
+	def addNode(self, coords, value=None, type=None):
 		if not self.getNode(coords):
-			self.nodes[coords] = Node.Node(coords)
+			self.nodes[coords] = Node.Node(coords, value, type)
 			#self.setAllNodes()
 			self.connectNodes()
 			self.getValueString("output")
