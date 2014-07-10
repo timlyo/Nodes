@@ -1,7 +1,7 @@
 from file import File
 import node as Node
 import pygame
-from reference import colour
+from reference import Colour
 
 
 class Grid:
@@ -63,11 +63,11 @@ class Grid:
 			node = self.getNode(nodeIndex)
 			nodePosition = self.getNodePosition(nodeIndex, displacement)  # on screen node coordinates
 
-			nodeColour = colour.grey
+			nodeColour = Colour.grey
 			if node.isInput():
-				nodeColour = colour.blue
+				nodeColour = Colour.blue
 			elif self.nodes[nodeIndex].isOutput():
-				nodeColour = colour.green
+				nodeColour = Colour.green
 
 			#circle
 			radius = int(20 * self.scale)
@@ -84,21 +84,21 @@ class Grid:
 			#connections
 			if node.connection[0] is not None:
 				otherNodePosition = self.getNodePosition(node.connection[0].coords, displacement)
-				pygame.draw.aaline(surface, colour.blue, nodePosition, otherNodePosition, 2)
+				pygame.draw.aaline(surface, Colour.blue, nodePosition, otherNodePosition, 2)
 
 				dotPos = [0, 0]
 				dotPos[0] = int(otherNodePosition[0] - (otherNodePosition[0] - nodePosition[0]) * (self.iterator / 100))
 				dotPos[1] = nodePosition[1]
-				surface.set_at(dotPos, colour.white)
+				surface.set_at(dotPos, Colour.white)
 
 			if node.connection[1] is not None:
 				otherNodePosition = self.getNodePosition(node.connection[1].coords, displacement)
-				pygame.draw.aaline(surface, colour.blue, nodePosition, otherNodePosition, 2)
+				pygame.draw.aaline(surface, Colour.blue, nodePosition, otherNodePosition, 2)
 
 				dotPos = [0, 0]
 				dotPos[0] = nodePosition[0]
 				dotPos[1] = int(otherNodePosition[1] - (otherNodePosition[1] - nodePosition[1]) * (self.iterator / 100))
-				surface.set_at(dotPos, colour.white)
+				surface.set_at(dotPos, Colour.white)
 
 		#draw value of node
 		for nodeIndex in self.nodes:
@@ -111,7 +111,7 @@ class Grid:
 				else:
 					nodeValue = "0"
 
-				nodeText = self.mainFont.render(nodeValue, 1, colour.white)
+				nodeText = self.mainFont.render(nodeValue, 1, Colour.white)
 				surface.blit(nodeText, (nodePos[0] - int(nodeText.get_width() / 2), nodePos[1] - int(nodeText.get_height() / 2)))
 
 	#handles a click within the grid, returns true if a node is added

@@ -1,5 +1,5 @@
 import pygame
-from reference import colour
+from reference import Colour
 
 
 class Widget:
@@ -12,7 +12,7 @@ class Widget:
 		self.height = 0
 		self.width = 0
 		self.surface = pygame.Surface((0, 0))
-		self.background = colour.transparent
+		self.background = Colour.transparent
 		self.padding = padding
 
 		self.isShown = True

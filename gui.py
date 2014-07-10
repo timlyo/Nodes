@@ -1,21 +1,19 @@
-import pygame
-
 from widget import Widget
 from button import Button
 from container import Container
 
-from reference import colour
-from reference import objects
+from reference import Reference
+from reference import Colour
+from reference import Objects
 
 
 class Gui:
 	def __init__(self, variables):
-		self.mainFont = pygame.font.Font(None, 24)
 		self.elements = {}
 		self.containers = {}
 		self.variables = variables
-		self.window = objects.window
-		self.grid = objects.grid
+		self.window = Objects.window
+		self.grid = Objects.grid
 
 		#initial variable values, only required for some that are created after the element
 		self.variables["scale"] = 1.0
@@ -31,35 +29,35 @@ class Gui:
 			surface.blit(item.surface, item.coords)
 
 	def createElements(self):
-		self.elements["clearButton"] = Button("Clear", self.mainFont)
-		self.elements["clearButton"].setBackground(colour.grey)
+		self.elements["clearButton"] = Button("Clear", Reference.mainFont)
+		self.elements["clearButton"].setBackground(Colour.grey)
 
-		self.elements["fps"] = Widget("fps: ", self.mainFont, (0, 0), self.variables["clock"].get_fps())
-		self.elements["scale"] = Widget("scale: ", self.mainFont, (0, 0), self.variables["scale"])
-		self.elements["mousePos"] = Widget("mousePos: ", self.mainFont, (0, 0), self.variables["mousePos"])
+		self.elements["fps"] = Widget("fps: ", Reference.mainFont, (0, 0), self.variables["clock"].get_fps())
+		self.elements["scale"] = Widget("scale: ", Reference.mainFont, (0, 0), self.variables["scale"])
+		self.elements["mousePos"] = Widget("mousePos: ", Reference.mainFont, (0, 0), self.variables["mousePos"])
 
 		#node info box stuff(prefix with an n)
-		self.elements["nValue"] = Widget("Value: ", self.mainFont, (0, 0), "")
-		self.elements["nPos"] = Widget("Position: ", self.mainFont, (0, 0), "")
+		self.elements["nValue"] = Widget("Value: ", Reference.mainFont, (0, 0), "")
+		self.elements["nPos"] = Widget("Position: ", Reference.mainFont, (0, 0), "")
 
 		#output box(prefix with o)
-		self.elements["oInput"] = Widget("    Input: ", self.mainFont, (0, 0), self.variables["input"])
-		self.elements["oOutput"] = Widget("Output: ", self.mainFont, (0, 0), self.variables["output"])
+		self.elements["oInput"] = Widget("    Input: ", Reference.mainFont, (0, 0), self.variables["input"])
+		self.elements["oOutput"] = Widget("Output: ", Reference.mainFont, (0, 0), self.variables["output"])
 
 	def createContainers(self):
-		self.containers["feedback"] = Container(self.window, [0, 0], [5, 5])
+		self.containers["feedback"] = Container([0, 0], [5, 5])
 		self.containers["feedback"].addElement(self.elements["scale"])
 		self.containers["feedback"].addElement(self.elements["fps"])
 		self.containers["feedback"].addElement(self.elements["mousePos"])
 		self.containers["feedback"].setPosition("topRight")
 
-		self.containers["nodeBox"] = Container(self.window, [0, 0], [5, 5])
+		self.containers["nodeBox"] = Container([0, 0], [5, 5])
 		self.containers["nodeBox"].addElement(self.elements["nPos"])
 		self.containers["nodeBox"].addElement(self.elements["nValue"])
 		self.containers["nodeBox"].setPosition("right")
 		self.containers["nodeBox"].hide()
 
-		self.containers["outputBox"] = Container(self.window, [0, 0], [5, 5])
+		self.containers["outputBox"] = Container([0, 0], [5, 5])
 		self.containers["outputBox"].addElement(self.elements["oInput"])
 		self.containers["outputBox"].addElement(self.elements["oOutput"])
 		self.containers["outputBox"].setPosition("bottomRight")

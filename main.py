@@ -5,7 +5,8 @@ import input as Input
 import pygame
 from pygame.locals import *
 
-from reference import objects
+from reference import Objects
+from reference import Reference
 
 
 def main():
@@ -24,11 +25,13 @@ def main():
 	window = Window.Window(variables)
 	mouseInput = Input.MouseInput(window)
 
-	objects.window = window
-	objects.grid = window.getGrid()
-	objects.mouseInput = mouseInput
+	Objects.window = window
+	Objects.grid = window.getGrid()
+	Objects.mouseInput = mouseInput
 
-	objects.gui.create()
+	Reference.mainFont = pygame.font.Font(None, 24)
+
+	Objects.gui.create()
 
 	displacement = [0, 0]
 
@@ -70,13 +73,13 @@ def main():
 		else:
 			mouseInput.getMouseMovement()
 
-		window.updateGuiVariable("oInput", str(objects.grid.getValueString("input")))
-		window.updateGuiVariable("oOutput", str(objects.grid.getValueString("output")))
+		window.updateGuiVariable("oInput", str(Objects.grid.getValueString("input")))
+		window.updateGuiVariable("oOutput", str(Objects.grid.getValueString("output")))
 		mousePos = (pygame.mouse.get_pos()[0] - displacement[0], pygame.mouse.get_pos()[1] - displacement[1])
-		window.updateGuiVariable("mousePos", objects.grid.getGridCoord(mousePos))
+		window.updateGuiVariable("mousePos", Objects.grid.getGridCoord(mousePos))
 		try:
-			window.updateGuiVariable("nValue", objects.grid.getActiveNode().getValue())
-			window.updateGuiVariable("nPos", objects.grid.getActiveNode().coords)
+			window.updateGuiVariable("nValue", Objects.grid.getActiveNode().getValue())
+			window.updateGuiVariable("nPos", Objects.grid.getActiveNode().coords)
 		except AttributeError:
 			window.updateGuiVariable("nValue", "")
 
@@ -92,7 +95,7 @@ def main():
 	print("==Shutting down==")
 	pygame.quit()
 
-	File.saveFile(objects.grid.getNodeList())
+	File.saveFile(Objects.grid.getNodeList())
 
 
 if __name__ == "__main__":

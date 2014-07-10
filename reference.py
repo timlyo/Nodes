@@ -1,9 +1,12 @@
+import pygame
+
+
 class Reference:
 	version = "0.1"
 	saveFile = "save.dat"
+	mainFont = None
 
-
-class colour:
+class Colour:
 	white = (255, 255, 255)
 	black = (0, 0, 0)
 	grey = (150, 150, 150)
@@ -12,7 +15,7 @@ class colour:
 	green = (0, 200, 0)
 
 
-class objects:
+class Objects:
 	grid = None
 	window = None
 	gui = None

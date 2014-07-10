@@ -3,8 +3,8 @@ from pygame.locals import *
 
 import gui as Gui
 import grid as Grid
-from reference import colour
-from reference import objects
+from reference import Colour
+from reference import Objects
 
 
 class Window():
@@ -23,12 +23,12 @@ class Window():
 
 		self.grid = Grid.Grid(self.scale, self.baseGridSize, self)
 		self.gui = Gui.Gui(variables)
-		objects.grid = self.grid
-		objects.gui = self.gui
+		Objects.grid = self.grid
+		Objects.gui = self.gui
 		self.gridChanged = True
 
 	def clear(self):
-		self.window.fill(colour.black)
+		self.window.fill(Colour.black)
 
 	def update(self):
 		self.gui.updateVariable("scale", self.scale)
@@ -60,7 +60,7 @@ class Window():
 	
 	def drawGridLines(self, displacement):
 		if self.gridChanged:
-			self.gridSurface.fill(colour.black)
+			self.gridSurface.fill(Colour.black)
 			self.gridSize = int(self.baseGridSize * self.scale)
 			rects = []
 
@@ -70,7 +70,7 @@ class Window():
 					height = y*self.gridSize+(displacement[1] % self.gridSize) - self.gridSize
 					rects.append(Rect(width, height, self.gridSize, self.gridSize))
 			for item in rects:
-				pygame.draw.rect(self.gridSurface, colour.blue, item, 1)
+				pygame.draw.rect(self.gridSurface, Colour.blue, item, 1)
 			self.gridChanged = False
 
 	def updateNodes(self):
@@ -89,7 +89,7 @@ class Window():
 			draws all elements of the gui
 		"""
 		self.gui.updateElements()
-		self.guiSurface.fill(colour.transparent)
+		self.guiSurface.fill(Colour.transparent)
 		self.gui.drawAll(self.guiSurface)
 
 	def updateGuiVariable(self, key, value):

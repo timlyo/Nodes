@@ -1,11 +1,10 @@
-from reference import objects
+from reference import Objects
 
 
 #holds references to elements and adjust their position to fit into a container
 class Container:
-	def __init__(self, window, coords=(0, 0), spacing=(0, 5), width=0, height=0):
+	def __init__(self, coords=(0, 0), spacing=(0, 5), width=0, height=0):
 		self.elements = []
-		self.window = window
 		self.position = "left"
 		self.coords = coords
 		self.target = coords
@@ -34,16 +33,16 @@ class Container:
 		if self.position == "left":
 			self.coords[0] = 0
 		elif self.position == "right":
-			self.coords[0] = objects.window.getWidth() - self.width - self.spacing[0]
-			self.coords[1] = objects.window.getHeight()/2 - self.height/2
+			self.coords[0] = Objects.window.getWidth() - self.width - self.spacing[0]
+			self.coords[1] = Objects.window.getHeight()/2 - self.height/2
 		elif self.position == "top":
-			self.coords[0] = objects.window.getWidth()/2 - self.width/2
+			self.coords[0] = Objects.window.getWidth()/2 - self.width/2
 			self.coords[1] = 0
 		elif self.position == "topright":
-			self.coords[0] = objects.window.getWidth() - self.width - self.spacing[0]
+			self.coords[0] = Objects.window.getWidth() - self.width - self.spacing[0]
 		elif self.position == "bottomright":
-			self.coords[0] = objects.window.getWidth() - self.width - self.spacing[0]
-			self.coords[1] = objects.window.getHeight() - self.height
+			self.coords[0] = Objects.window.getWidth() - self.width - self.spacing[0]
+			self.coords[1] = Objects.window.getHeight() - self.height
 
 	#sets the container width to the width of the widest element
 	def updateWidth(self):
