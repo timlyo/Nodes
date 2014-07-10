@@ -5,6 +5,8 @@ import input as Input
 import pygame
 from pygame.locals import *
 
+from reference import objects
+
 
 def main():
 	pygame.init()
@@ -20,8 +22,13 @@ def main():
 	variables["mousePos"] = (0, 0)
 
 	window = Window.Window(variables)
-	grid = window.getGrid()
 	mouseInput = Input.MouseInput(window)
+
+	objects.window = window
+	objects.grid = window.getGrid()
+	objects.mouseInput = mouseInput
+
+	objects.gui.create()
 
 	displacement = [0, 0]
 
@@ -63,13 +70,13 @@ def main():
 		else:
 			mouseInput.getMouseMovement()
 
-		window.updateGuiVariable("oInput", str(grid.getValueString("input")))
-		window.updateGuiVariable("oOutput", str(grid.getValueString("output")))
+		window.updateGuiVariable("oInput", str(objects.grid.getValueString("input")))
+		window.updateGuiVariable("oOutput", str(objects.grid.getValueString("output")))
 		mousePos = (pygame.mouse.get_pos()[0] - displacement[0], pygame.mouse.get_pos()[1] - displacement[1])
-		window.updateGuiVariable("mousePos", grid.getGridCoord(mousePos))
+		window.updateGuiVariable("mousePos", objects.grid.getGridCoord(mousePos))
 		try:
-			window.updateGuiVariable("nValue", grid.getActiveNode().getValue())
-			window.updateGuiVariable("nPos", grid.getActiveNode().coords)
+			window.updateGuiVariable("nValue", objects.grid.getActiveNode().getValue())
+			window.updateGuiVariable("nPos", objects.grid.getActiveNode().coords)
 		except AttributeError:
 			window.updateGuiVariable("nValue", "")
 
@@ -85,7 +92,7 @@ def main():
 	print("==Shutting down==")
 	pygame.quit()
 
-	File.saveFile(grid.getNodeList())
+	File.saveFile(objects.grid.getNodeList())
 
 
 if __name__ == "__main__":

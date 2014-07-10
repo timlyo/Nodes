@@ -4,6 +4,7 @@ from pygame.locals import *
 import gui as Gui
 import grid as Grid
 from reference import colour
+from reference import objects
 
 
 class Window():
@@ -21,7 +22,9 @@ class Window():
 		print("Creating Window ", self.size)
 
 		self.grid = Grid.Grid(self.scale, self.baseGridSize, self)
-		self.gui = Gui.Gui(variables, self)
+		self.gui = Gui.Gui(variables)
+		objects.grid = self.grid
+		objects.gui = self.gui
 		self.gridChanged = True
 
 	def clear(self):

@@ -5,20 +5,22 @@ from button import Button
 from container import Container
 
 from reference import colour
+from reference import objects
 
 
 class Gui:
-	def __init__(self, variables, window):
+	def __init__(self, variables):
 		self.mainFont = pygame.font.Font(None, 24)
 		self.elements = {}
 		self.containers = {}
 		self.variables = variables
-		self.window = window
-		self.grid = self.window.getGrid()
+		self.window = objects.window
+		self.grid = objects.grid
 
 		#initial variable values, only required for some that are created after the element
 		self.variables["scale"] = 1.0
 
+	def create(self):
 		self.createElements()
 		self.createContainers()
 		print("Created gui")
