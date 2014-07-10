@@ -3,9 +3,9 @@ from reference import Objects
 
 #holds references to elements and adjust their position to fit into a container
 class Container:
-	def __init__(self, coords=(0, 0), spacing=(0, 5), width=0, height=0):
+	def __init__(self, coords=[0, 0], spacing=[5, 5], width=0, height=0, position="left"):
 		self.elements = []
-		self.position = "left"
+		self.position = position
 		self.coords = coords
 		self.target = coords
 		self.speed = 5  # (coords - target)/speed therefore higher values are slower

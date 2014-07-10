@@ -31,6 +31,8 @@ class Gui:
 	def createElements(self):
 		self.elements["clearButton"] = Button("Clear", Reference.mainFont)
 		self.elements["clearButton"].setBackground(Colour.grey)
+		self.elements["quitButton"] = Button("Quit", Reference.mainFont)
+		self.elements["quitButton"].setBackground(Colour.grey)
 
 		self.elements["fps"] = Widget("fps: ", Reference.mainFont, (0, 0), self.variables["clock"].get_fps())
 		self.elements["scale"] = Widget("scale: ", Reference.mainFont, (0, 0), self.variables["scale"])
@@ -39,6 +41,12 @@ class Gui:
 		#node info box stuff(prefix with an n)
 		self.elements["nValue"] = Widget("Value: ", Reference.mainFont, (0, 0), "")
 		self.elements["nPos"] = Widget("Position: ", Reference.mainFont, (0, 0), "")
+		self.elements["nConnectionX"] = Widget("xConnection", Reference.mainFont, (0, 0), "")
+		self.elements["nConnectionXBut"] = Button("xConnection", Reference.mainFont, (0, 0), "")
+		self.elements["nConnectionXBut"].setBackground(Colour.grey)
+		self.elements["nConnectionY"] = Widget("yConnection ", Reference.mainFont, (0, 0), "")
+		self.elements["nConnectionYBut"] = Button("yConnection ", Reference.mainFont, (0, 0), "")
+		self.elements["nConnectionYBut"].setBackground(Colour.grey)
 
 		#output box(prefix with o)
 		self.elements["oInput"] = Widget("    Input: ", Reference.mainFont, (0, 0), self.variables["input"])
@@ -54,6 +62,10 @@ class Gui:
 		self.containers["nodeBox"] = Container([0, 0], [5, 5])
 		self.containers["nodeBox"].addElement(self.elements["nPos"])
 		self.containers["nodeBox"].addElement(self.elements["nValue"])
+		self.containers["nodeBox"].addElement(self.elements["nConnectionX"])
+		self.containers["nodeBox"].addElement(self.elements["nConnectionXBut"])
+		self.containers["nodeBox"].addElement(self.elements["nConnectionY"])
+		self.containers["nodeBox"].addElement(self.elements["nConnectionYBut"])
 		self.containers["nodeBox"].setPosition("right")
 		self.containers["nodeBox"].hide()
 
@@ -61,6 +73,10 @@ class Gui:
 		self.containers["outputBox"].addElement(self.elements["oInput"])
 		self.containers["outputBox"].addElement(self.elements["oOutput"])
 		self.containers["outputBox"].setPosition("bottomRight")
+
+		self.containers["buttons"] = Container([0, 0], [5, 5])
+		self.containers["buttons"].addElement(self.elements["clearButton"])
+		self.containers["buttons"].addElement(self.elements["quitButton"])
 
 	def updateVariable(self, key, value):
 		assert isinstance(key, str)
