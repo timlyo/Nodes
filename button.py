@@ -5,12 +5,14 @@ from reference import Objects
 
 
 class Button(Widget):
-	def __init__(self, text, font, coords=(0, 0), dimensions=(0, 0)):
+	def __init__(self, text, font, function, coords=(0, 0), dimensions=(0, 0)):
 		super(Button, self).__init__(text, font)
 		self.dimensions = (self.getWidth(), self.getHeight())
+		self.function = function
 		clickField = pygame.Rect(coords, self.dimensions)
-		self.index = Objects.mouseInput.addClickField(clickField, self)
+		self.index = Objects.mouseInput.addClickField(clickField, self.function)
 
-	def click(self):
-		Objects.grid.clear()
-		Objects.window.updateGrid()
+	def update(self):
+		self.dimensions = (self.getWidth(), self.getHeight())
+		clickField = pygame.Rect(self.coords, self.dimensions)
+		Objects.mouseInput.addClickField(clickField, self.function, self.index)

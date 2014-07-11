@@ -1,3 +1,5 @@
+import grid
+
 from widget import Widget
 from button import Button
 from container import Container
@@ -29,9 +31,9 @@ class Gui:
 			surface.blit(item.surface, item.coords)
 
 	def createElements(self):
-		self.elements["clearButton"] = Button("Clear", Reference.mainFont)
+		self.elements["clearButton"] = Button("Clear", Reference.mainFont, Objects.grid.clear)
 		self.elements["clearButton"].setBackground(Colour.grey)
-		self.elements["quitButton"] = Button("Quit", Reference.mainFont)
+		self.elements["quitButton"] = Button("Quit", Reference.mainFont, Objects.window.quit)
 		self.elements["quitButton"].setBackground(Colour.grey)
 
 		self.elements["fps"] = Widget("fps: ", Reference.mainFont, (0, 0), self.variables["clock"].get_fps())
@@ -42,10 +44,10 @@ class Gui:
 		self.elements["nValue"] = Widget("Value: ", Reference.mainFont, (0, 0), "")
 		self.elements["nPos"] = Widget("Position: ", Reference.mainFont, (0, 0), "")
 		self.elements["nConnectionX"] = Widget("xConnection", Reference.mainFont, (0, 0), "")
-		self.elements["nConnectionXBut"] = Button("xConnection", Reference.mainFont, (0, 0), "")
+		self.elements["nConnectionXBut"] = Button("xConnection", Reference.mainFont, grid.Grid.clear)
 		self.elements["nConnectionXBut"].setBackground(Colour.grey)
 		self.elements["nConnectionY"] = Widget("yConnection ", Reference.mainFont, (0, 0), "")
-		self.elements["nConnectionYBut"] = Button("yConnection ", Reference.mainFont, (0, 0), "")
+		self.elements["nConnectionYBut"] = Button("yConnection ", Reference.mainFont, grid.Grid.clear)
 		self.elements["nConnectionYBut"].setBackground(Colour.grey)
 
 		#output box(prefix with o)
@@ -89,3 +91,8 @@ class Gui:
 			self.elements[item].render()
 		for item in self.containers:
 			self.containers[item].update()
+
+	#button functions
+	def clear(self):
+		Objects.grid.clear()
+		Objects.window.updateGrid()

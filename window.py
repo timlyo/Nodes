@@ -9,9 +9,10 @@ from reference import Objects
 
 class Window():
 	def __init__(self, variables):
+		Objects.window = self
+
 		self.window = pygame.display.set_mode((0, 0), RESIZABLE)
 		self.size = self.window.get_size()
-		print(pygame.display.get_wm_info())
 
 		self.scale = 1.0
 		self.baseGridSize = 50
@@ -26,6 +27,15 @@ class Window():
 		Objects.grid = self.grid
 		Objects.gui = self.gui
 		self.gridChanged = True
+
+		self.running = True
+
+	def isRunning(self):
+		return self.running
+
+	def quit(self):
+		print("Quit")
+		self.running = False
 
 	def clear(self):
 		self.window.fill(Colour.black)

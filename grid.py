@@ -1,7 +1,9 @@
 from file import File
 import node as Node
 import pygame
+
 from reference import Colour
+from reference import Objects
 
 
 class Grid:
@@ -263,4 +265,5 @@ class Grid:
 
 	def clear(self):
 		self.nodes = {}
+		Objects.window.updateGrid()
 

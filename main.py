@@ -25,7 +25,6 @@ def main():
 	window = Window.Window(variables)
 	mouseInput = Input.MouseInput(window)
 
-	Objects.window = window
 	Objects.grid = window.getGrid()
 	Objects.mouseInput = mouseInput
 
@@ -35,14 +34,13 @@ def main():
 
 	displacement = [0, 0]
 
-	running = True
-	while running:
+	while window.isRunning():
 		clock.tick(60)
 		window.updateGuiVariable("fps", int(clock.get_fps()))
 		# input
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
-				running = False
+				window.quit()
 
 			elif event.type == pygame.MOUSEBUTTONDOWN:
 				if event.button == 1 or event.button == 2 or event.button == 3:

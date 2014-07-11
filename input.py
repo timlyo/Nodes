@@ -1,4 +1,5 @@
 from pygame import *
+from reference import Objects
 
 
 class MouseInput:
@@ -17,10 +18,10 @@ class MouseInput:
 		#list of rects where clicky things happen
 		self.clickFields = []
 
-	def addClickField(self, field, object, index=None):
+	def addClickField(self, field, function, index=None):
 		if index is None:
 			index = len(self.clickFields)
-		self.clickFields.insert(index, (field, object))
+		self.clickFields.insert(index, (field, function))
 		return index
 
 	def isInClickField(self, pos):
@@ -40,7 +41,8 @@ class MouseInput:
 			if button == 1:
 				clickObject = self.isInClickField(position)
 				if clickObject:
-					clickObject.click()
+					print(clickObject)
+					clickObject(Objects.grid)
 					return
 
 			self.displacedPosition(displacement)
