@@ -9,8 +9,9 @@ from reference import Objects
 class Grid:
 	def __init__(self, scale, baseGridSize, window):
 		print("Created Grid")
+		Objects.grid = self
 		self.nodes = {}
-		File.loadFile(self)
+		File.loadFile()
 		self.scale = scale
 		self.baseGridSize = baseGridSize
 		self.mainFont = pygame.font.Font(None, 24)

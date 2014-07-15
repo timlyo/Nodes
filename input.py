@@ -83,5 +83,7 @@ class KeyboardInput():
 		print("keyboard input started")
 
 	def handleKey(self, key):
-		if key == K_q:
-			pass
+		activeNode = Objects.grid.getActiveNode()
+		if key == K_TAB:
+			if activeNode is not None:
+				activeNode.changeValue()

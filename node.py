@@ -2,14 +2,14 @@ import random
 
 
 class Node:
-	def __init__(self, coords, value=None, type=None):
+	def __init__(self, coords, value=None, nodeType=None):
 		if value is not None:
 			self.value = random.choice((True, False))
 		else:
 			self.value = value
 
-		if type is not None:
-			self.type = type
+		if nodeType is not None:
+			self.type = nodeType
 		else:
 			self.type = "default"
 
@@ -39,13 +39,20 @@ class Node:
 		elif self.isOutput():
 			self.becomeDefault()
 
-	def changeConnection(self, connection, type):
-		self.connectionType[connection] = type
+	def changeConnection(self, connection, nodeType):
+		self.connectionType[connection] = nodeType
 
 	def getConnectionType(self, connection):
 		assert isinstance(connection, int)
 		assert 0 <= connection <= 1
 		return self.connectionType[connection]
+
+	def changeValue(self, value=None):
+		self.changed = True
+		if value is not None:
+			self.value = value
+		else:
+			self.value = not self.value
 
 	def becomeInput(self):
 		self.type = "input"
@@ -95,3 +102,4 @@ class Node:
 		assert isinstance(connection, int)
 		assert 0 <= connection <= 1
 		self.connection[connection].input(self.value, connection)
+		self.changed = False

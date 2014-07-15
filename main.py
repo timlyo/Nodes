@@ -46,14 +46,14 @@ def main():
 				window.quit()
 
 			elif event.type == pygame.MOUSEBUTTONDOWN:
-				buttons = (1, 2, 3)
-				if event.button in buttons:
+				if event.button in (1, 2, 3):
 					mouseInput.mouseDown(pygame.mouse.get_pos())
 
 			elif event.type == pygame.MOUSEBUTTONUP:
-				buttons = (1, 2, 3)
-				if event.button in buttons:
+				if event.button in (1, 2, 3):
 					mouseInput.mouseUp(pygame.mouse.get_pos(), displacement, event.button)
+				elif event.button in (KMOD_SHIFT, KMOD_CTRL, K_TAB):
+					keyboardInput.handleKey(event.key)
 				elif event.button == 4:
 					window.zoomIn()
 				elif event.button == 5:

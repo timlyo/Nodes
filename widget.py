@@ -69,7 +69,6 @@ class Widget:
 	def setBackground(self, colour):
 		assert isinstance(colour, tuple)
 		self.background = colour
-		print(self, " background is now ", colour)
 
 	def update(self):
 		pass
