@@ -87,3 +87,6 @@ class KeyboardInput():
 		if key == K_TAB:
 			if activeNode is not None:
 				activeNode.changeValue()
+		if key == K_q:
+			if activeNode is not None:
+				activeNode.changeType()
