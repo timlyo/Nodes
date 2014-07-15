@@ -25,12 +25,19 @@ class Grid:
 
 	# sets the active node variable that is used for the node info box
 	def activateNode(self, node):
-		self.activeNode = node
-		self.window.showGuiContainer("nodeBox")
-		print(node, " is now active")
+		if self.activeNode is not node:
+			self.activeNode = node
+			self.window.showGuiContainer("nodeBox")
+			return True
+		return False
 
 	def getActiveNode(self):
 		return self.activeNode
+
+	def changeActiveNode(self, connection, type):
+		assert isinstance(type, str)
+		assert 0 <= connection <= 1
+		self.activeNode.changeConnection
 
 	def updateScale(self, scale):
 		self.scale = scale
@@ -54,6 +61,7 @@ class Grid:
 			node = self.getNode(nodeIndex)
 			if node.isInput():
 				pass
+			node.update()
 
 	#draws all nodes to the surface that is passed to it
 	def drawNodes(self, surface, displacement):
@@ -70,7 +78,9 @@ class Grid:
 
 			#circle
 			radius = int(20 * self.scale)
-			pygame.draw.circle(surface, nodeColour, nodePosition, radius)
+			ringColour = (node.brightness, node.brightness, node.brightness)
+			pygame.draw.circle(surface, ringColour, nodePosition, radius)
+			pygame.draw.circle(surface, nodeColour, nodePosition, radius-2)
 
 		#draw connecting lines
 		if self.iterator > 1:

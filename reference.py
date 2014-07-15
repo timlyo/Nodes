@@ -6,6 +6,7 @@ class Reference:
 	saveFile = "save.dat"
 	mainFont = None
 
+
 class Colour:
 	white = (255, 255, 255)
 	black = (0, 0, 0)

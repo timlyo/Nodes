@@ -14,8 +14,22 @@ class Node:
 			self.type = "default"
 
 		self.connection = [None, None]  # 0 is right 1 is down
+		self.changed = True  # tracks if the value has changed
+		self.connectionType = ["xor", "xor"]
 		self.coords = coords
-		self.changed = True
+		self.brightness = 255
+
+	def update(self):
+		if self.brightness > 0:
+			self.brightness -= 15
+		if self.brightness < 1:
+			self.brightness = 0
+
+		if self.isInput() and self.changed:
+			if self.connection[0] is not None:
+				self.passData(0)
+			elif self.connection[1] is not None:
+				self.passData(1)
 
 	def changeType(self):
 		if self.isDefault():
@@ -24,6 +38,14 @@ class Node:
 			self.becomeOutput()
 		elif self.isOutput():
 			self.becomeDefault()
+
+	def changeConnection(self, connection, type):
+		self.connectionType[connection] = type
+
+	def getConnectionType(self, connection):
+		assert isinstance(connection, int)
+		assert 0 <= connection <= 1
+		return self.connectionType[connection]
 
 	def becomeInput(self):
 		self.type = "input"
@@ -61,11 +83,15 @@ class Node:
 
 	#function called by other nodes when they pass data through
 	def input(self, value, connection):
-		self.changed = True
+		self.brightness = 255
 		if self.isOutput():
 			self.value = value
-		self.connection[connection].input(value)
+		if self.connection[connection] is not None:
+			self.connection[connection].input(value, connection)
 
 	#called when an input node is updated
 	#passes value to  connections
-	#def passData(self):
+	def passData(self, connection):
+		assert isinstance(connection, int)
+		assert 0 <= connection <= 1
+		self.connection[connection].input(self.value, connection)

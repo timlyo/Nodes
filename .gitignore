@@ -5,3 +5,5 @@
 *.sublime-workspace
 __pycache__/
 *.dat
+.idea/
+*.dat

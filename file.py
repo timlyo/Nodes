@@ -23,15 +23,16 @@ class File:
 
 	@staticmethod
 	def saveFile(nodes):
-		if len(nodes) is 0:
-			return
 		assert isinstance(nodes, dict)
 		file = open(Reference.saveFile, "w")
 		print("Saving to ", Reference.saveFile )
-		print(nodes)
+		if len(nodes) is 0:
+			file.close()
+			return
 		for nodeIndex in nodes:
 			node = nodes[nodeIndex]
 			coords = str(nodeIndex).replace("(", "").replace(")", "")
 			line = coords + " " + str(node.value) + " " + node.type + "\n"
 			file.write(line)
+		file.write("\n")
 		file.close()

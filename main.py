@@ -21,9 +21,12 @@ def main():
 	variables["output"] = ""
 	variables["activeNode"] = None
 	variables["mousePos"] = (0, 0)
+	variables["activeNodeX"] = "xor"
+	variables["activeNodeY"] = None
 
 	window = Window.Window(variables)
-	mouseInput = Input.MouseInput(window)
+	mouseInput = Input.MouseInput()
+	keyboardInput = Input.KeyboardInput()
 
 	Objects.grid = window.getGrid()
 	Objects.mouseInput = mouseInput
@@ -43,11 +46,13 @@ def main():
 				window.quit()
 
 			elif event.type == pygame.MOUSEBUTTONDOWN:
-				if event.button == 1 or event.button == 2 or event.button == 3:
+				buttons = (1, 2, 3)
+				if event.button in buttons:
 					mouseInput.mouseDown(pygame.mouse.get_pos())
 
 			elif event.type == pygame.MOUSEBUTTONUP:
-				if event.button == 1 or event.button == 2 or event.button == 3:
+				buttons = (1, 2, 3)
+				if event.button in buttons:
 					mouseInput.mouseUp(pygame.mouse.get_pos(), displacement, event.button)
 				elif event.button == 4:
 					window.zoomIn()
@@ -59,6 +64,8 @@ def main():
 					displacement[0] = 0
 					displacement[1] = 1
 					window.updateGrid()
+				else:
+					keyboardInput.handleKey(event.key)
 
 			elif event.type == pygame.VIDEORESIZE:
 				window.resize(event.size[0], event.size[1])
@@ -78,6 +85,8 @@ def main():
 		try:
 			window.updateGuiVariable("nValue", Objects.grid.getActiveNode().getValue())
 			window.updateGuiVariable("nPos", Objects.grid.getActiveNode().coords)
+			window.updateGuiVariable("activeNodeX", Objects.grid.getActiveNode().getConnectionType(0))
+			window.updateGuiVariable("activeNodeY", Objects.grid.getActiveNode().getConnectionType(1))
 		except AttributeError:
 			window.updateGuiVariable("nValue", "")
 

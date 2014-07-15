@@ -3,11 +3,8 @@ from reference import Objects
 
 
 class MouseInput:
-	def __init__(self, window):
+	def __init__(self):
 		print("Mouse input started")
-		self.window = window
-		self.grid = self.window.getGrid()
-
 		self.mouseButtonDown = False
 		self.mousePosition = [0, 0]
 		self.previousMousePosition = [0, 0]
@@ -38,24 +35,25 @@ class MouseInput:
 		self.mouseButtonDown = False
 		self.mouseUpPosition = position
 		if self.isClick():
-			if button == 1:
+			if button == 1:  # pull out clicks on gui elements
 				clickObject = self.isInClickField(position)
 				if clickObject:
 					print(clickObject)
-					clickObject(Objects.grid)
+					clickObject()
 					return
 
 			self.displacedPosition(displacement)
-			if self.grid.gridClick(self.displacedMousePos, button):  # if a node is added
-				self.window.updateGrid()
+			if Objects.grid.gridClick(self.displacedMousePos, button):  # if a node is added
+				Objects.window.updateGrid()
 			else:  # select node and draw and draw info into box
-				coords = self.grid.getGridCoord(self.displacedMousePos)
-				node = self.grid.getNode(coords)
+				coords = Objects.grid.getGridCoord(self.displacedMousePos)
+				node = Objects.grid.getNode(coords)
 				if button == 1:
-					self.grid.activateNode(node)
+					if not Objects.grid.activateNode(node):
+						print("Not activated")
 				elif button == 2:
-					self.grid.changeNodeType(node)
-				self.window.updateGrid()
+					Objects.grid.changeNodeType(node)
+				Objects.window.updateGrid()
 
 	def isMouseClicked(self):
 		return self.mouseButtonDown
@@ -65,7 +63,7 @@ class MouseInput:
 		self.previousMousePosition = self.mousePosition
 		self.mousePosition = mouse.get_pos()
 		return (self.mousePosition[0] - self.previousMousePosition[0],
-					self.mousePosition[1] - self.previousMousePosition[1])
+				self.mousePosition[1] - self.previousMousePosition[1])
 
 	#works out if the mouse has clicked or dragged(heuristic)
 	def isClick(self):
@@ -78,3 +76,12 @@ class MouseInput:
 	def displacedPosition(self, displacement):
 		self.displacedMousePos[0] = self.previousMousePosition[0] - displacement[0]
 		self.displacedMousePos[1] = self.previousMousePosition[1] - displacement[1]
+
+
+class KeyboardInput():
+	def __init__(self):
+		print("keyboard input started")
+
+	def handleKey(self, key):
+		if key == K_q:
+			pass
