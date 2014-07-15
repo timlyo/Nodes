@@ -13,5 +13,8 @@ The program is a simulation environment for a grid based cryptography system
 
 Key | Action 
 --- | ------
-Left click | add node
-Right click | delete node
+Left click | Add node
+Right click | Delete node
+Middle click | Change node type
+Tab | Change node Value
+Space | Recentre view
