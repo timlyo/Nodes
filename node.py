@@ -17,6 +17,7 @@ class Node:
 		self.changed = True  # tracks if the value has changed
 		self.coords = coords
 		self.brightness = 255
+		self.active = False
 
 		self.connectionTypes = ["xor", "xor"]
 
@@ -60,6 +61,9 @@ class Node:
 
 	def becomeOutput(self):
 		self.type = "output"
+
+	def isActive(self):
+		return self.active
 
 	def isInput(self):
 		if self.type == "input":

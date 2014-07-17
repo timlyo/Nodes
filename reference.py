@@ -1,6 +1,3 @@
-import pygame
-
-
 class Reference:
 	version = "0.1"
 	saveFile = "save.dat"
@@ -14,6 +11,7 @@ class Colour:
 	transparent = (0, 0, 0, 0)
 	blue = (0, 0, 200)
 	green = (0, 200, 0)
+	yellow = (200, 200, 0)
 
 
 class Objects:

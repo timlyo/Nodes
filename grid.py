@@ -27,7 +27,10 @@ class Grid:
 	# sets the active node variable that is used for the node info box
 	def activateNode(self, node):
 		if self.activeNode is not node:
+			if self.activeNode is not None:
+				self.activeNode.active = False
 			self.activeNode = node
+			node.active = True
 			self.window.showGuiContainer("nodeBox")
 			return True
 		return False
@@ -77,10 +80,15 @@ class Grid:
 			elif self.nodes[nodeIndex].isOutput():
 				nodeColour = Colour.green
 
-			#circle
+			#=outline circles
 			radius = int(20 * self.scale)
-			ringColour = (node.brightness, node.brightness, node.brightness)
+			#change circle
+			ringColour = (node.brightness, node.brightness, node.brightness, node.brightness)
 			pygame.draw.circle(surface, ringColour, nodePosition, radius)
+			#active circle
+			if node.isActive():
+				ringColour = Colour.yellow
+				pygame.draw.circle(surface, ringColour, nodePosition, radius)
 			pygame.draw.circle(surface, nodeColour, nodePosition, radius-2)
 
 		#draw connecting lines

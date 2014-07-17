@@ -49,16 +49,18 @@ class Container:
 		width = 0
 		for item in self.elements:
 			if item.getWidth() > width:
-				width = item.getWidth()
-				width += self.spacing[0]
+				if item.isShown:
+					width = item.getWidth()
+					width += self.spacing[0]
 		self.width = width
 
 	#sets the container height to the total height of all elements
 	def updateHeight(self):
 		height = 0
 		for item in self.elements:
-			height += item.getHeight()
-			height += self.spacing[1]
+			if item.isShown:
+				height += item.getHeight()
+				height += self.spacing[1]
 		self.height = height
 
 	#position the container's elements

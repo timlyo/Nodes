@@ -18,7 +18,7 @@ class Window():
 		self.baseGridSize = 50
 
 		#surfaces
-		self.gridSurface = pygame.Surface(self.size)
+		self.gridSurface = pygame.Surface(self.size, pygame.SRCALPHA, 32).convert_alpha()
 		self.guiSurface = pygame.Surface(self.size, pygame.SRCALPHA, 32).convert_alpha()
 		print("Creating Window ", self.size)
 
