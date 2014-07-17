@@ -83,8 +83,11 @@ class Gui:
 		activeNode = Objects.grid.getActiveNode()
 		if activeNode is not None:
 			pass
-			#if activeNode.isDefault():
-				#self.elements["nValue"].hide()
+			if activeNode.isDefault():
+				self.elements["nValue"].hide()
+			elif activeNode.isInput():
+				self.elements["nConnectionY"].hide()
+				self.elements["nConnectionX"].hide()
 		for item in self.elements:
 			self.elements[item].update()
 			self.elements[item].render()
