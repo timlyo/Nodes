@@ -39,6 +39,7 @@ class MouseInput:
 				clickObject = self.isInClickField(position)
 				if clickObject:
 					print(clickObject)
+					assert not isinstance(clickObject, bool)
 					clickObject()
 					return
 
@@ -84,9 +85,11 @@ class KeyboardInput():
 
 	def handleKey(self, key):
 		activeNode = Objects.grid.getActiveNode()
-		if key == K_TAB:
-			if activeNode is not None:
+		if activeNode is not None:
+			if key == K_TAB:
 				activeNode.changeValue()
-		if key == K_q:
-			if activeNode is not None:
+			if key == K_q:
 				activeNode.changeType()
+			keys = (K_w, K_e)
+			if key in keys:
+				activeNode.changeConnectionType()

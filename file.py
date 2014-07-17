@@ -22,7 +22,7 @@ class File:
 				xCord = line[0].replace(",", "").split(".")[0]
 				yCord = line[1].split(".")[0]
 				coords = (int(xCord), int(yCord))
-				Objects.grid.addNode(coords, line[2], line[3])
+				Objects.grid.addNode(coords, line[2], line[4])
 
 		file.close()
 
@@ -42,7 +42,8 @@ class File:
 		for nodeIndex in nodes:
 			node = nodes[nodeIndex]
 			coords = str(nodeIndex).replace("(", "").replace(")", "")
-			line = coords + " " + str(node.value) + " " + node.type + "\n"
+			value = str(node.value).replace("[", "").replace("]", "").replace(",", "")
+			line = coords + " " + value + " " + node.type + "\n"
 			file.write(line)
 		file.write("\n")
 		file.close()

@@ -21,7 +21,7 @@ def main():
 	variables["output"] = ""
 	variables["activeNode"] = None
 	variables["mousePos"] = (0, 0)
-	variables["activeNodeX"] = "xor"
+	variables["activeNodeX"] = None
 	variables["activeNodeY"] = None
 
 	window = Window.Window(variables)
@@ -85,8 +85,8 @@ def main():
 		try:
 			window.updateGuiVariable("nValue", Objects.grid.getActiveNode().getValue())
 			window.updateGuiVariable("nPos", Objects.grid.getActiveNode().coords)
-			window.updateGuiVariable("activeNodeX", Objects.grid.getActiveNode().getConnectionType(0))
-			window.updateGuiVariable("activeNodeY", Objects.grid.getActiveNode().getConnectionType(1))
+			window.updateGuiVariable("nConnectionX", Objects.grid.getActiveNode().getConnectionTypes()[0])
+			window.updateGuiVariable("nConnectionY", Objects.grid.getActiveNode().getConnectionTypes()[1])
 		except AttributeError:
 			window.updateGuiVariable("nValue", "")
 

@@ -92,8 +92,8 @@ class Grid:
 			node = self.getNode(nodeIndex)
 			nodePosition = self.getNodePosition(nodeIndex, displacement)  # on screen node coordinates
 			#connections
-			if node.connection[0] is not None:
-				otherNodePosition = self.getNodePosition(node.connection[0].coords, displacement)
+			if node.connections[0] is not None:
+				otherNodePosition = self.getNodePosition(node.connections[0].coords, displacement)
 				pygame.draw.aaline(surface, Colour.blue, nodePosition, otherNodePosition, 2)
 
 				dotPos = [0, 0]
@@ -101,8 +101,8 @@ class Grid:
 				dotPos[1] = nodePosition[1]
 				surface.set_at(dotPos, Colour.white)
 
-			if node.connection[1] is not None:
-				otherNodePosition = self.getNodePosition(node.connection[1].coords, displacement)
+			if node.connections[1] is not None:
+				otherNodePosition = self.getNodePosition(node.connections[1].coords, displacement)
 				pygame.draw.aaline(surface, Colour.blue, nodePosition, otherNodePosition, 2)
 
 				dotPos = [0, 0]
@@ -196,18 +196,18 @@ class Grid:
 				node.disConnect(1)
 
 			if node.isInput():
-				if node.connection[0] is not None:
-					if node.connection[0].isInput():
+				if node.connections[0] is not None:
+					if node.connections[0].isInput():
 						node.disConnect(0)
-				if node.connection[1] is not None:
-					if node.connection[1].isInput():
+				if node.connections[1] is not None:
+					if node.connections[1].isInput():
 						node.disConnect(1)
 			if node.isOutput():
-				if node.connection[0] is not None:
-					if node.connection[0].isOutput():
+				if node.connections[0] is not None:
+					if node.connections[0].isOutput():
 						node.disConnect(0)
-				if node.connection[1] is not None:
-					if node.connection[1].isOutput():
+				if node.connections[1] is not None:
+					if node.connections[1].isOutput():
 						node.disConnect(1)
 
 	#check if node is at coords
