@@ -136,8 +136,7 @@ class Grid:
 			self.deleteNode(clickCoord)
 
 	def getGridCoord(self, position):
-		"""
-			calculates the position of a click in grid coordinates
+		"""calculates the position of a click in grid coordinates
 		:param position: on screen position of click
 		:return: grid position of click
 		"""
@@ -180,6 +179,8 @@ class Grid:
 					self.getNode(node).connect(1, self.getNode(below, node))
 			if self.isNode(right, node):
 				if self.getNode(right, node).isDefault():
+					self.getNode(node).connect(0, self.getNode(right, node))
+				if self.getNode(node).isDefault and self.getNode(right, node).isOutput():
 					self.getNode(node).connect(0, self.getNode(right, node))
 		self.pruneConnections()
 

@@ -1,4 +1,4 @@
-import random
+from reference import Objects
 
 
 class Node:
@@ -35,6 +35,7 @@ class Node:
 			self.becomeOutput()
 		elif self.isOutput():
 			self.becomeDefault()
+		Objects.grid.connectNodes()
 
 	def changeConnection(self, connection, nodeType):
 		self.connectionTypes[connection] = nodeType
