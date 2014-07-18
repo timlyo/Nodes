@@ -6,9 +6,7 @@ from reference import Objects
 class File:
 	@staticmethod
 	def loadFile():
-		"""
-		Loads the file named in references add changes the node list to it's value
-		:return: None
+		"""Loads the file named in references add changes the node list to it's value
 		"""
 		if isfile(Reference.saveFile):
 			file = open(Reference.saveFile, "r")
@@ -27,15 +25,12 @@ class File:
 		file.close()
 
 	@staticmethod
-	def saveFile(nodes):
+	def saveFile():
+		"""saves the list of nodes to the filename in references
 		"""
-		saves the list of nodes to the filename in references
-		:param nodes: the nodes to be saved
-		:return: None
-		"""
-		assert isinstance(nodes, dict)
+		nodes = Objects.grid.getNodeList()
 		file = open(Reference.saveFile, "w")
-		print("Saving to ", Reference.saveFile )
+		print("Saving to ", Reference.saveFile)
 		if len(nodes) is 0:
 			file.close()
 			return

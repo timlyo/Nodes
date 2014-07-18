@@ -12,6 +12,8 @@ class MouseInput:
 		self.mouseDownPosition = [0, 0]
 		self.mouseUpPosition = [0, 0]
 
+		Objects.mouseInput = self
+
 		#list of rects where clicky things happen
 		self.clickFields = []
 
@@ -90,6 +92,9 @@ class KeyboardInput():
 				activeNode.changeValue()
 			if key == K_q:
 				activeNode.changeType()
-			keys = (K_w, K_e)
-			if key in keys:
+			moveKeys = (K_UP, K_DOWN, K_LEFT, K_RIGHT)
+			if key in moveKeys:
+				Objects.grid.moveActiveNode(key)
+			nodeModKeys = (K_w, K_e)
+			if key in nodeModKeys:
 				activeNode.changeConnectionType()

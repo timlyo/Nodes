@@ -19,5 +19,6 @@ Middle click | Change node type
 Tab*         | Change node Value
 Space*       | Recentre view
 Q*           | Change node type
+Arrow Keys*  | Move active Node
 
 *requires an active node

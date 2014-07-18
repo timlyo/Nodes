@@ -28,9 +28,6 @@ def main():
 	mouseInput = Input.MouseInput()
 	keyboardInput = Input.KeyboardInput()
 
-	Objects.grid = window.getGrid()
-	Objects.mouseInput = mouseInput
-
 	Reference.mainFont = pygame.font.Font(None, 24)
 
 	Objects.gui.create()
@@ -52,14 +49,14 @@ def main():
 			elif event.type == pygame.MOUSEBUTTONUP:
 				if event.button in (1, 2, 3):
 					mouseInput.mouseUp(pygame.mouse.get_pos(), displacement, event.button)
-				elif event.button in (KMOD_SHIFT, K_q):
+				elif event.button in (KMOD_SHIFT, K_q, K_UP, K_DOWN, K_LEFT, K_RIGHT):
 					keyboardInput.handleKey(event.key)
 				elif event.button == 4:
 					window.zoomIn()
 				elif event.button == 5:
 					window.zoomOut()
 
-			elif event.type == pygame.KEYUP:
+			elif event.type == pygame.KEYDOWN:
 				if event.key == K_SPACE:
 					displacement[0] = 0
 					displacement[1] = 1
@@ -91,18 +88,12 @@ def main():
 			window.updateGuiVariable("nValue", "")
 
 		#rendering
-		window.clear()
-		window.drawGridLines(displacement)
-		window.updateNodes()
-		window.drawNodes(displacement)
-		window.drawGui()
-		window.blitSurfaces()
-		window.update()
+		window.update(displacement)
 
 	print("==Shutting down==")
 	pygame.quit()
 
-	File.saveFile(Objects.grid.getNodeList())
+	File.saveFile()
 
 
 if __name__ == "__main__":

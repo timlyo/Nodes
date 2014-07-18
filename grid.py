@@ -1,6 +1,7 @@
 from file import File
 import node as Node
 import pygame
+from pygame.locals import *
 
 from reference import Colour
 from reference import Objects
@@ -38,10 +39,30 @@ class Grid:
 	def getActiveNode(self):
 		return self.activeNode
 
-	def changeActiveNode(self, connection, type):
-		assert isinstance(type, str)
-		assert 0 <= connection <= 1
-		self.activeNode.changeConnection
+	def changeActiveNode(self, node):
+		print(node.coords, "is now active")
+		self.activeNode.active = False
+		self.activeNode = node
+		self.activeNode.active = True
+
+	def moveActiveNode(self, direction):
+		left = (-1, 0)
+		right = (1, 0)
+		above = (0, -1)
+		below = (0, 1)
+		activeNode = self.activeNode
+		if direction == K_UP:
+			newNode = self.getNode(above, activeNode.coords)
+		elif direction == K_DOWN:
+			newNode = self.getNode(below, activeNode.coords)
+		elif direction == K_LEFT:
+			newNode = self.getNode(left, activeNode.coords)
+		elif direction == K_RIGHT:
+			newNode = self.getNode(right, activeNode.coords)
+
+		if newNode is not None:
+			self.changeActiveNode(newNode)
+			print("move node up")
 
 	def updateScale(self, scale):
 		self.scale = scale
@@ -88,7 +109,7 @@ class Grid:
 			#active circle
 			if node.isActive():
 				ringColour = Colour.yellow
-				pygame.draw.circle(surface, ringColour, nodePosition, radius)
+				pygame.draw.circle(surface, ringColour, nodePosition, radius-1)
 			pygame.draw.circle(surface, nodeColour, nodePosition, radius-2)
 
 		#draw connecting lines

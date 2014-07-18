@@ -13,6 +13,7 @@ class Window():
 
 		self.window = pygame.display.set_mode((0, 0), RESIZABLE)
 		self.size = self.window.get_size()
+		self.gridSize = 0
 
 		self.scale = 1.0
 		self.baseGridSize = 50
@@ -40,7 +41,13 @@ class Window():
 	def clear(self):
 		self.window.fill(Colour.black)
 
-	def update(self):
+	def update(self, displacement):
+		self.clear()
+		self.drawGridLines(displacement)
+		self.updateNodes()
+		self.drawNodes(displacement)
+		self.drawGui()
+		self.blitSurfaces()
 		self.gui.updateVariable("scale", self.scale)
 		pygame.display.update()
 
@@ -95,8 +102,7 @@ class Window():
 
 	#GUI Functions
 	def drawGui(self):
-		"""
-			draws all elements of the gui
+		"""draws all elements of the gui
 		"""
 		self.gui.updateElements()
 		self.guiSurface.fill(Colour.transparent)
