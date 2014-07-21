@@ -13,7 +13,7 @@ class Node:
 		else:
 			self.type = "default"
 
-		self.connections = [[None, "none"], [None, "none"]]  # 0 is right 1 is down
+		self.connections = [[None, "xor"], [None, "xor"]]  # 0 is right 1 is down
 		self.changed = True  # tracks if the value has changed
 		self.coords = coords
 		self.brightness = 255
@@ -123,10 +123,14 @@ class Node:
 					data = self.processData(self.connections[1][1], 1)
 					self.connections[1][0].receive(data, 1)
 
-	#called by other nodes when a node receives input
 	def receive(self, data, connection):
-		self.brightness = 255
+		"""
+		Called by other nods to pass data through the grid
+		:param data: value from the other node
+		:param connection: number of the connection that it was sent along
+		"""
 		if self.value[connection] != data:
+			self.brightness = 255
 			self.changed = True
 			self.value[connection] = data
 			if self.isInput() or self.isOutput():
