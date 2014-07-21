@@ -21,5 +21,7 @@ Space*       | Reset view
 Q*           | Change node type
 Arrow Keys*  | Move active Node
 Shift*       | Creates a new nodes whilst moving
+E, R, T      | Set connection type on the X axis
+S, D, F      | Set connection type on the Y axis
 
 \* *requires an active node*
