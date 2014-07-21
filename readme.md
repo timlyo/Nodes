@@ -20,5 +20,6 @@ Tab*         | Change node Value
 Space*       | Reset view
 Q*           | Change node type
 Arrow Keys*  | Move active Node
+Shift*       | Creates a new nodes whilst moving
 
 \* *requires an active node*

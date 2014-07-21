@@ -49,7 +49,7 @@ def main():
 			elif event.type == pygame.MOUSEBUTTONUP:
 				if event.button in (1, 2, 3):
 					mouseInput.mouseUp(pygame.mouse.get_pos(), displacement, event.button)
-				elif event.button in (KMOD_SHIFT, K_q, K_UP, K_DOWN, K_LEFT, K_RIGHT):
+				elif event.button in (K_q, K_UP, K_DOWN, K_LEFT, K_RIGHT):
 					keyboardInput.handleKey(event.key)
 				elif event.button == 4:
 					window.zoomIn()

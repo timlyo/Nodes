@@ -12,3 +12,13 @@ class Util:
 			string = string.replace(item, "")
 
 		return string
+
+	@staticmethod
+	def addLists(tuple1, tuple2):
+		result = []
+		for index in range(len(tuple1)):
+			if index >= len(tuple2):
+				return result
+			result.append(tuple1[index] + tuple2[index])
+
+		return tuple(result)

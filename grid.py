@@ -6,6 +6,8 @@ from pygame.locals import *
 from reference import Colour
 from reference import Objects
 
+from util import Util
+
 
 class Grid:
 	def __init__(self, scale, baseGridSize, window):
@@ -45,24 +47,33 @@ class Grid:
 		self.activeNode = node
 		self.activeNode.active = True
 
-	def moveActiveNode(self, direction):
+	def moveActiveNode(self, direction, create=False):
 		left = (-1, 0)
 		right = (1, 0)
 		above = (0, -1)
 		below = (0, 1)
 		activeNode = self.activeNode
+		coords = (0, 0)
 		if direction == K_UP:
-			newNode = self.getNode(above, activeNode.coords)
+			coords = Util.addLists(activeNode.coords, above)
+			newNode = self.getNode(coords)
 		elif direction == K_DOWN:
-			newNode = self.getNode(below, activeNode.coords)
+			coords = Util.addLists(activeNode.coords, below)
+			newNode = self.getNode(coords)
 		elif direction == K_LEFT:
-			newNode = self.getNode(left, activeNode.coords)
+			coords = Util.addLists(activeNode.coords, left)
+			newNode = self.getNode(coords)
 		elif direction == K_RIGHT:
-			newNode = self.getNode(right, activeNode.coords)
+			coords = Util.addLists(activeNode.coords, right)
+			newNode = self.getNode(coords)
 
-		if newNode is not None:
-			self.changeActiveNode(newNode)
-			print("move node up")
+		if newNode is None:
+			if create is True:
+				self.addNode(coords)
+				newNode = self.getNode(coords)
+			else:
+				return
+		self.changeActiveNode(newNode)
 
 	def updateScale(self, scale):
 		self.scale = scale

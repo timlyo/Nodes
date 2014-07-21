@@ -85,27 +85,31 @@ class KeyboardInput():
 	def __init__(self):
 		print("keyboard input started")
 
-	def handleKey(self, key):
+	def handleKey(self, pressedKey):
 		activeNode = Objects.grid.getActiveNode()
+		mods = key.get_mods()
 		if activeNode is not None:
-			if key == K_TAB:
+			if pressedKey == K_TAB:
 				activeNode.changeValue()
-			elif key == K_q:
+			elif pressedKey == K_q:
 				activeNode.changeType()
+
 			moveKeys = (K_UP, K_DOWN, K_LEFT, K_RIGHT)
-			if key in moveKeys:
-				Objects.grid.moveActiveNode(key)
+			if pressedKey in moveKeys:
+				if mods & KMOD_LSHIFT:
+					Objects.grid.moveActiveNode(pressedKey, True)
+
 			nodeModKeys = (K_w, K_e, K_r, K_s, K_d, K_f)
-			if key in nodeModKeys:
-				if key == K_w:
+			if pressedKey in nodeModKeys:
+				if pressedKey == K_w:
 					activeNode.changeConnectionType(0, "none")
-				if key == K_e:
+				if pressedKey == K_e:
 					activeNode.changeConnectionType(0, "xor")
-				if key == K_r:
+				if pressedKey == K_r:
 					activeNode.changeConnectionType(0, "not")
-				if key == K_s:
+				if pressedKey == K_s:
 					activeNode.changeConnectionType(1, "none")
-				if key == K_d:
+				if pressedKey == K_d:
 					activeNode.changeConnectionType(1, "xor")
-				if key == K_f:
+				if pressedKey == K_f:
 					activeNode.changeConnectionType(1, "not")
