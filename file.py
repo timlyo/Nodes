@@ -40,11 +40,14 @@ class File:
 
 		for line in file:
 			if line is not "\n":
-				line = line.replace("\n", "").replace(",", "").split(" ")
+				line = line.replace("\n", "").split(" ")
 				xCord = line[0].split(".")[0]
 				yCord = line[1].split(".")[0]
 				coords = (int(xCord), int(yCord))
-				value = bool(line[2])
+				if line[2] == "True":
+					value = True
+				else:
+					value = False
 				type = line[3]
 				Objects.grid.addNode(coords, value, type)
 

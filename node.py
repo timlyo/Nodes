@@ -3,7 +3,7 @@ from reference import Objects
 
 class Node:
 	def __init__(self, coords, value=None, nodeType=None):
-		if value is not None:
+		if value is None:
 			self.value = [True, True]
 		else:
 			self.value = [value, value]  # 2nd index only used for a default node
