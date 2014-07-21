@@ -82,8 +82,8 @@ def main():
 		try:
 			window.updateGuiVariable("nValue", Objects.grid.getActiveNode().getValue())
 			window.updateGuiVariable("nPos", Objects.grid.getActiveNode().coords)
-			window.updateGuiVariable("nConnectionX", Objects.grid.getActiveNode().getConnectionTypes()[0])
-			window.updateGuiVariable("nConnectionY", Objects.grid.getActiveNode().getConnectionTypes()[1])
+			window.updateGuiVariable("nConnectionX", Objects.grid.getActiveNode().getConnectionType(0))
+			window.updateGuiVariable("nConnectionY", Objects.grid.getActiveNode().getConnectionType(1))
 		except AttributeError:
 			window.updateGuiVariable("nValue", "")
 

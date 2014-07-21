@@ -13,13 +13,13 @@ class Node:
 		else:
 			self.type = "default"
 
-		self.connections = [None, None]  # 0 is right 1 is down
+		self.connections = [[None, "none"], [None, "none"]]  # 0 is right 1 is down
 		self.changed = True  # tracks if the value has changed
 		self.coords = coords
 		self.brightness = 255
 		self.active = False
 
-		self.connectionTypes = ["xor", "xor"]
+		self.connectionTypes = ("none", "xor", "not")
 
 	def update(self):
 		if self.brightness > 0:
@@ -39,19 +39,19 @@ class Node:
 		Objects.grid.connectNodes()
 
 	def changeConnection(self, connection, nodeType):
-		self.connectionTypes[connection] = nodeType
+		self.connections[connection][1] = nodeType
 
 	def getConnectionType(self, connection):
 		assert isinstance(connection, int)
 		assert 0 <= connection <= 1
-		return self.connectionTypes[connection]
+		return self.connections[connection][1]
 
 	def changeConnectionType(self, connection, connectionType):
 		assert isinstance(connection, int)
 		assert 0 <= connection <= 1
 		assert isinstance(connectionType, str)
 		assert connectionType in self.connectionTypes
-		self.connectionTypes[connection] = connectionType
+		self.connections[connection][1] = connectionType
 
 	def becomeInput(self):
 		self.type = "input"
@@ -100,10 +100,10 @@ class Node:
 
 	def connect(self, index, node):
 		assert 0 <= index <= 1
-		self.connections[index] = node
+		self.connections[index][0] = node
 
 	def disConnect(self, connection):
-		self.connections[connection] = None
+		self.connections[connection][0] = None
 
 	#called when a node is updated
 	#passes value to connected nodes
@@ -111,17 +111,17 @@ class Node:
 		if self.changed:
 			self.changed = False
 			if self.isInput():
-				if self.connections[0] is not None:
-					self.connections[0].receive(self.value[0], 0)
-				if self.connections[1] is not None:
-					self.connections[1].receive(self.value[1], 1)
+				if self.connections[0][0] is not None:
+					self.connections[0][0].receive(self.value[0], 0)
+				if self.connections[1][0] is not None:
+					self.connections[1][0].receive(self.value[1], 1)
 			else:
-				if self.connections[0] is not None:
-					data = self.processData(self.connectionTypes[0])
-					self.connections[0].receive(data, 0)
-				if self.connections[1] is not None:
-					data = self.processData(self.connectionTypes[1])
-					self.connections[1].receive(data, 1)
+				if self.connections[0][0] is not None:
+					data = self.processData(self.connections[0][1], 0)
+					self.connections[0][0].receive(data, 0)
+				if self.connections[1][0] is not None:
+					data = self.processData(self.connections[1][1], 1)
+					self.connections[1][0].receive(data, 1)
 
 	#called by other nodes when a node receives input
 	def receive(self, data, connection):
@@ -132,29 +132,9 @@ class Node:
 			if self.isInput() or self.isOutput():
 				self.value[1-connection] = data
 
-	#function called by other nodes on a default or output node
-	#collect input, set value
-	#process inputs and calculate outputs
-	#pass outputs onto other nodes
-	def input(self, value, connection):
-		assert isinstance(connection, int)
-		self.brightness = 255
-		if self.isOutput():
-			if self.value[0] != value:
-				self.value[0] = value
-			return
-		if self.connections[0] is not None:
-			data = self.processData(self.connectionTypes[0])
-			self.value[0] = data
-			self.connections[0].input(data, connection)
-		if self.connections[1] is not None:
-			data = self.processData(self.connectionTypes[1])
-			self.value[1] = data
-			self.connections[1].input(data, connection)
-
 	#carries out the binary operation on the two connections and returns the value
-	def processData(self, operation):
-		if operation == "xor":
+	def processData(self, operation, connection):
+		if operation == "none":
+			return self.value[connection]
+		elif operation == "xor":
 			return self.value[0] != self.value[1]
-		elif operation == "and":
-			return self.value[0] and self.value[1]

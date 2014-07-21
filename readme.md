@@ -13,12 +13,12 @@ The program is a simulation environment for a grid based cryptography system
 
 Key          | Action 
 ---          | ------
-Left click   | Add node or active node
+Left click   | Add node or activate node
 Right click  | Delete node
 Middle click | Change node type
 Tab*         | Change node Value
-Space*       | Recentre view
+Space*       | Reset view
 Q*           | Change node type
 Arrow Keys*  | Move active Node
 
-*requires an active node
+\* *requires an active node*

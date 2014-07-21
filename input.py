@@ -90,11 +90,22 @@ class KeyboardInput():
 		if activeNode is not None:
 			if key == K_TAB:
 				activeNode.changeValue()
-			if key == K_q:
+			elif key == K_q:
 				activeNode.changeType()
 			moveKeys = (K_UP, K_DOWN, K_LEFT, K_RIGHT)
 			if key in moveKeys:
 				Objects.grid.moveActiveNode(key)
-			nodeModKeys = (K_w, K_e)
+			nodeModKeys = (K_w, K_e, K_r, K_s, K_d, K_f)
 			if key in nodeModKeys:
-				activeNode.changeConnectionType()
+				if key == K_w:
+					activeNode.changeConnectionType(0, "none")
+				if key == K_e:
+					activeNode.changeConnectionType(0, "xor")
+				if key == K_r:
+					activeNode.changeConnectionType(0, "not")
+				if key == K_s:
+					activeNode.changeConnectionType(1, "none")
+				if key == K_d:
+					activeNode.changeConnectionType(1, "xor")
+				if key == K_f:
+					activeNode.changeConnectionType(1, "not")
