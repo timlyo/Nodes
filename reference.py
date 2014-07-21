@@ -1,10 +1,16 @@
 class Reference:
+	"""
+	General data for the program
+	"""
 	version = "0.1"
 	saveFile = "save.dat"
 	mainFont = None
 
 
 class Colour:
+	"""
+	Stores a series of colours that are used throughout the program
+	"""
 	white = (255, 255, 255)
 	black = (0, 0, 0)
 	grey = (150, 150, 150)
@@ -15,6 +21,9 @@ class Colour:
 
 
 class Objects:
+	"""
+	References to objects that are created in other sections of the program
+	"""
 	grid = None
 	window = None
 	gui = None

@@ -173,29 +173,6 @@ class Grid:
 		yCord = position[1] // (self.baseGridSize * self.scale)
 		return xCord, yCord
 
-	#checks every node and changes it's type if needed(depreciated)
-	def DsetAllNodes(self):
-		right = (1, 0)
-		left = (-1, 0)
-		above = (0, -1)
-		below = (0, 1)
-		for node in self.nodes:  # This may be changed later
-			self.nodes[node].becomeDefault()
-			if not self.isNode(left, node) and not self.isNode(above, node):
-				self.getNode(node).becomeInput()
-			if not self.isNode(above, node):
-				if self.isNode(left, node) and self.getNode(left, node).isInput():
-					self.getNode(node).becomeInput()
-			if not self.isNode(left, node):
-				if self.isNode(above, node) and self.getNode(above, node).isInput():
-					self.getNode(node).becomeInput()
-			if self.isNode(left, node) and self.getNode(left, node).isDefault():
-				if not self.isNode(right, node):
-					self.getNode(node).becomeOutput()
-			if self.isNode(above, node) and self.getNode(above, node).isDefault():
-				if not self.getNode(below, node):
-					self.getNode(node).becomeOutput()
-
 	#connects each node to the one below and to the right of it
 	def connectNodes(self):
 		right = (1, 0)
@@ -261,13 +238,23 @@ class Grid:
 			return self.nodes[pos]
 		return None
 
-	# work out the on screen coordinates of a node from it's grid coordinates
 	def getNodePosition(self, coords, displacement):
-		xCord = int((coords[0] * 50 + 25) * self.scale) + displacement[0]
-		yCord = int((coords[1] * 50 + 25) * self.scale) + displacement[1]
-		return xCord, yCord
+		"""
+		Calculate the on screen position of a node from it's grid coordinates
+		:param coords: coordinates of the node
+		:param displacement: current displacement of the grid
+		:return: tuple of the x and y position of the node
+		"""
+		xPos = int((coords[0] * 50 + 25) * self.scale) + displacement[0]
+		yPos = int((coords[1] * 50 + 25) * self.scale) + displacement[1]
+		return xPos, yPos
 
-	def getNodes(self, type="default"):
+	def getNodes(self, type=None):
+		"""
+		Returns a sorted list of all the nodes
+		:param type: determines the type of nodes to return, default=all nodes
+		:return: sorted node list
+		"""
 		nodeList = []
 		for nodeIndex in self.nodes:
 			node = self.getNode(nodeIndex)
@@ -284,6 +271,11 @@ class Grid:
 		return nodeList
 
 	def getValueString(self, type):
+		"""
+		Gets a string of all the input or output nodes within the grid
+		:param type: input or output nodes
+		:return: string for the value of the nodes
+		"""
 		assert isinstance(type, str)
 		nodeList = self.getNodes(type)
 		value = ""

@@ -13,7 +13,7 @@ class Node:
 		else:
 			self.type = "default"
 
-		self.connections = [[None, "xor"], [None, "xor"]]  # 0 is right 1 is down
+		self.connections = [[None, "none"], [None, "none"]]  # 0 is right 1 is down
 		self.changed = True  # tracks if the value has changed
 		self.coords = coords
 		self.brightness = 255
@@ -26,8 +26,9 @@ class Node:
 			self.brightness -= 15
 		if self.brightness < 1:
 			self.brightness = 0
-
-		self.passData()
+		if self.changed:
+			self.changed = False
+			self.passData()
 
 	def changeType(self):
 		if self.isDefault():
@@ -108,20 +109,18 @@ class Node:
 	#called when a node is updated
 	#passes value to connected nodes
 	def passData(self):
-		if self.changed:
-			self.changed = False
-			if self.isInput():
-				if self.connections[0][0] is not None:
-					self.connections[0][0].receive(self.value[0], 0)
-				if self.connections[1][0] is not None:
-					self.connections[1][0].receive(self.value[1], 1)
-			else:
-				if self.connections[0][0] is not None:
-					data = self.processData(self.connections[0][1], 0)
-					self.connections[0][0].receive(data, 0)
-				if self.connections[1][0] is not None:
-					data = self.processData(self.connections[1][1], 1)
-					self.connections[1][0].receive(data, 1)
+		if self.isInput():
+			if self.connections[0][0] is not None:
+				self.connections[0][0].receive(self.value[0], 0)
+			if self.connections[1][0] is not None:
+				self.connections[1][0].receive(self.value[1], 1)
+		else:
+			if self.connections[0][0] is not None:
+				data = self.processData(self.connections[0][1], 0)
+				self.connections[0][0].receive(data, 0)
+			if self.connections[1][0] is not None:
+				data = self.processData(self.connections[1][1], 1)
+				self.connections[1][0].receive(data, 1)
 
 	def receive(self, data, connection):
 		"""
