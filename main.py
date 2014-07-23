@@ -1,6 +1,8 @@
-from file import File
+from save import File
 import window as Window
 import input as Input
+
+import sys
 
 import pygame
 from pygame.locals import *
@@ -10,6 +12,8 @@ from reference import Reference
 
 
 def main():
+	args = sys.argv[1:]
+	print(args)
 	pygame.init()
 	print("==Started==")
 

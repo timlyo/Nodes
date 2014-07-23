@@ -23,7 +23,6 @@ class File:
 			coords = Util.removeFromString(nodeIndex, ["(", ")", ","])
 			value = Util.removeFromString(node.value, ["[", "]", ","]).split(" ")
 			line = coords + " " + value[0] + " " + node.type + "\n"
-			print(repr(line))
 			file.write(line)
 		file.write("\n")
 		file.close()

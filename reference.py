@@ -4,6 +4,7 @@ class Reference:
 	"""
 	version = "0.1"
 	saveFile = "save.dat"
+	logFile = "log.dat"
 	mainFont = None
 
 

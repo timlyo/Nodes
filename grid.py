@@ -1,4 +1,4 @@
-from file import File
+from save import File
 import node as Node
 import pygame
 from pygame.locals import *
@@ -54,6 +54,7 @@ class Grid:
 		below = (0, 1)
 		activeNode = self.activeNode
 		coords = (0, 0)
+		newNode = None
 		if direction == K_UP:
 			coords = Util.addLists(activeNode.coords, above)
 			newNode = self.getNode(coords)
