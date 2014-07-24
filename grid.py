@@ -1,7 +1,9 @@
 from save import File
 import node as Node
+
 import pygame
 from pygame.locals import *
+import random
 
 from reference import Colour
 from reference import Objects
@@ -312,3 +314,14 @@ class Grid:
 		self.nodes = {}
 		Objects.window.updateGrid()
 
+	def randomise(self):
+		"""
+		Give all the input nodes random values and the default nodes
+		"""
+		for nodeIndex in self.nodes:
+			node = self.getNode(nodeIndex)
+			if node.isInput():
+				node.changeValue(random.choice([True, False]))
+			elif node.isDefault():
+				node.changeConnectionType(0, random.choice(node.connectionTypes))
+				node.changeConnectionType(1, random.choice(node.connectionTypes))

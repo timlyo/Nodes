@@ -81,15 +81,6 @@ class Node:
 			return True
 		return False
 
-	def getValue(self):
-		if self.isInput() or self.isOutput():
-			return self.value[0]
-		else:
-			return self.value
-
-	def getConnectionTypes(self):
-		return self.connectionTypes
-
 	def changeValue(self, value=None):
 		self.changed = True
 		if value is not None:
@@ -98,6 +89,15 @@ class Node:
 		else:
 			self.value[0] = not self.value[0]
 			self.value[1] = not self.value[1]
+
+	def getValue(self):
+		if self.isInput() or self.isOutput():
+			return self.value[0]
+		else:
+			return self.value
+
+	def getConnectionTypes(self):
+		return self.connectionTypes
 
 	def connect(self, index, node):
 		assert 0 <= index <= 1

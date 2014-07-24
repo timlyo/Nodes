@@ -46,7 +46,7 @@ class File:
 				if line[2] == "True":
 					value = True
 				else:
-					value
+					value = False
 				type = line[3]
 				Objects.grid.addNode(coords, value, type)
 
