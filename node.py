@@ -22,10 +22,11 @@ class Node:
 		self.connectionTypes = ("none", "xor", "not")
 
 	def update(self):
-		if self.brightness > 0:
-			self.brightness -= 15
 		if self.brightness < 1:
 			self.brightness = 0
+		else:
+			self.brightness -= 15
+
 		if self.changed:
 			self.changed = False
 			self.passData()
@@ -40,6 +41,7 @@ class Node:
 		Objects.grid.connectNodes()
 
 	def changeConnection(self, connection, nodeType):
+		self.changed = True
 		self.connections[connection][1] = nodeType
 
 	def getConnectionType(self, connection):

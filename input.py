@@ -82,9 +82,6 @@ class MouseInput:
 
 
 class KeyboardInput():
-	def __init__(self):
-		print("keyboard input started")
-
 	def handleKey(self, pressedKey):
 		activeNode = Objects.grid.getActiveNode()
 		mods = key.get_mods()

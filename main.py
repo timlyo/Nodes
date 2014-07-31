@@ -83,6 +83,7 @@ def main():
 		window.updateGuiVariable("oOutput", str(Objects.grid.getValueString("output")))
 		mousePos = (pygame.mouse.get_pos()[0] - displacement[0], pygame.mouse.get_pos()[1] - displacement[1])
 		window.updateGuiVariable("mousePos", Objects.grid.getGridCoord(mousePos))
+
 		try:
 			window.updateGuiVariable("nValue", Objects.grid.getActiveNode().getValue())
 			window.updateGuiVariable("nPos", Objects.grid.getActiveNode().coords)
@@ -93,6 +94,9 @@ def main():
 
 		#rendering
 		window.update(displacement)
+
+		if Objects.grid.isDone():
+			print(Objects.grid.getValueString("output"))
 
 	print("==Shutting down==")
 	pygame.quit()

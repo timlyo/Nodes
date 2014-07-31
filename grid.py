@@ -314,14 +314,32 @@ class Grid:
 		self.nodes = {}
 		Objects.window.updateGrid()
 
-	def randomise(self):
+	def randomiseInput(self):
 		"""
-		Give all the input nodes random values and the default nodes
+		Give all the input nodes random states and the default nodes
 		"""
 		for nodeIndex in self.nodes:
 			node = self.getNode(nodeIndex)
 			if node.isInput():
 				node.changeValue(random.choice([True, False]))
-			elif node.isDefault():
+
+	def randomiseNodes(self):
+		"""
+		Give all the node's connections random states
+		:return:
+		"""
+		for nodeIndex in self.nodes:
+			node = self.getNode(nodeIndex)
+			if node.isDefault():
 				node.changeConnectionType(0, random.choice(node.connectionTypes))
 				node.changeConnectionType(1, random.choice(node.connectionTypes))
+
+	def isDone(self):
+		"""
+		Checks if every node has passed it's data
+		:return:
+		"""
+		for nodeIndex in self.nodes:
+			node = self.getNode(nodeIndex)
+			if node.changed is True:
+				return False

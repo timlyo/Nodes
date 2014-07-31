@@ -35,8 +35,10 @@ class Gui:
 		self.elements["clearButton"].setBackground(Colour.grey)
 		self.elements["quitButton"] = Button("Quit", Reference.mainFont, Objects.window.quit)
 		self.elements["quitButton"].setBackground(Colour.grey)
-		self.elements["randomButton"] = Button("Randomise", Reference.mainFont, Objects.grid.randomise)
-		self.elements["randomButton"].setBackground(Colour.grey)
+		self.elements["randomInBut"] = Button("Randomise Input", Reference.mainFont, Objects.grid.randomiseInput)
+		self.elements["randomInBut"].setBackground(Colour.grey)
+		self.elements["randomNodesBut"] = Button("Randomise Nodes", Reference.mainFont, Objects.grid.randomiseNodes)
+		self.elements["randomNodesBut"].setBackground(Colour.grey)
 
 		self.elements["fps"] = Widget("fps: ", Reference.mainFont, (0, 0), self.variables["clock"].get_fps())
 		self.elements["scale"] = Widget("scale: ", Reference.mainFont, (0, 0), self.variables["scale"])
@@ -75,7 +77,8 @@ class Gui:
 		self.containers["buttons"] = Container([0, 0], [5, 5])
 		self.containers["buttons"].addElement(self.elements["clearButton"])
 		self.containers["buttons"].addElement(self.elements["quitButton"])
-		self.containers["buttons"].addElement(self.elements["randomButton"])
+		self.containers["buttons"].addElement(self.elements["randomInBut"])
+		self.containers["buttons"].addElement(self.elements["randomNodesBut"])
 
 	def updateVariable(self, key, value):
 		assert isinstance(key, str)
