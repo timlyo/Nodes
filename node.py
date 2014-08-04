@@ -13,13 +13,13 @@ class Node:
 		else:
 			self.type = "default"
 
-		self.connections = [[None, "none"], [None, "none"]]  # 0 is right 1 is down
+		self.connections = [[None, "xnor"], [None, "xnor"]]  # 0 is right 1 is down
 		self.changed = True  # tracks if the value has changed
 		self.coords = coords
 		self.brightness = 255
 		self.active = False
 
-		self.connectionTypes = ("none", "xor", "not")
+		self.connectionTypes = ("xnor", "xor", "not")
 
 	def update(self):
 		if self.brightness < 1:
@@ -108,9 +108,10 @@ class Node:
 	def disConnect(self, connection):
 		self.connections[connection][0] = None
 
-	#called when a node is updated
-	#passes value to connected nodes
 	def passData(self):
+		"""
+		Called when a node is update, passes the data to other nodes
+		"""
 		if self.isInput():
 			if self.connections[0][0] is not None:
 				self.connections[0][0].receive(self.value[0], 0)
@@ -136,10 +137,19 @@ class Node:
 			self.value[connection] = data
 			if self.isInput() or self.isOutput():
 				self.value[1-connection] = data
+			if self.isOutput():
+				Objects.grid.updateNodes()
 
-	#carries out the binary operation on the two connections and returns the value
 	def processData(self, operation, connection):
-		if operation == "none":
+		"""
+		Processes the data from the node
+		:param operation: binary operation to carry out
+		:param connection: connection that passed the data
+		:return: result of the operation
+		"""
+		if operation == "xnor":
 			return self.value[connection]
 		elif operation == "xor":
 			return self.value[0] != self.value[1]
+		elif operation == "not":
+			return not self.value[connection]

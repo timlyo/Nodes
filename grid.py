@@ -84,14 +84,14 @@ class Grid:
 	def addNode(self, coords, value=None, type=None):
 		if not self.getNode(coords):
 			self.nodes[coords] = Node.Node(coords, value, type)
-			self.connectNodes()
+			self.updateNodes()
 			return True
 		return False
 
 	def deleteNode(self, coords):
 		if coords in self.nodes:
 			del self.nodes[coords]
-			self.connectNodes()
+			self.updateNodes()
 			return True
 		return False
 
@@ -101,6 +101,7 @@ class Grid:
 			if node.isInput():
 				pass
 			node.update()
+		self.connectNodes()
 
 	#draws all nodes to the surface that is passed to it
 	def drawNodes(self, surface, displacement):
